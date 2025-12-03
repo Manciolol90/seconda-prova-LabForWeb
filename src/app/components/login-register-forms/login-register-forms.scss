@@ -1,0 +1,56 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.popup-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 330px;
+}
+
+.contenitore-img {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.box-inserimento {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.username,
+.password {
+  padding: 10px;
+}
+
+.msg-errore {
+  color: #d32f2f;
+  font-size: 0.8rem;
+}
+
+.registra-button {
+  cursor: pointer;
+  font-weight: bold;
+  color: #1976d2;
+}
+
+.psw {
+  font-size: 0.9rem;
+}
+
+.close {
+  align-self: center;
+  margin-top: 20px;
+}

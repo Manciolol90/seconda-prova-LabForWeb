@@ -1,0 +1,22 @@
+<form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="popup-content">
+  <div class="contenitore-img">
+    <img src="LabTV-Loghi/4.png" alt="Logo" />
+  </div>
+
+  <div class="box-inserimento">
+    <label for="username"><b>Username</b></label>
+    <input matInput type="text" id="username" name="username" [(ngModel)]="username" required />
+
+    <label for="email"><b>Email</b></label>
+    <input matInput type="email" id="email" name="email" [(ngModel)]="email" required />
+
+    <label for="password"><b>Password</b></label>
+    <input matInput type="password" id="password" name="password" [(ngModel)]="password" required />
+
+    <button mat-raised-button color="primary" type="submit">Registrati</button>
+  </div>
+
+  <button mat-button color="warn" type="button" class="close" (click)="closeDialog()">
+    Chiudi
+  </button>
+</form>
