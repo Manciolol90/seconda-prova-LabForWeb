@@ -32,7 +32,7 @@
       Inserisci una password valida
     </span>
 
-    <button mat-raised-button color="primary" type="submit">Login</button>
+    <button mat-button type="submit">Login</button>
 
     <label>
       <input type="checkbox" [(ngModel)]="remember" name="remember" checked="checked" />
@@ -41,7 +41,7 @@
   </div>
 
   <div class="box-inserimento">
-    <label class="registra-button" (click)="openRegister()">Registrati</label>
+    <button mat-button (click)="openRegister()">Registrati</button>
     <span class="psw">Forgot <a href="#">password?</a></span>
   </div>
 

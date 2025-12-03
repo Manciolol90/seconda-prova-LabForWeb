@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { RegisterForm } from '../register-form/register-form';
 @Component({
   selector: 'app-login-register-forms',
+  standalone: true,
   imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, RegisterForm],
   templateUrl: './login-register-forms.html',
   styleUrl: './login-register-forms.scss',
@@ -34,6 +35,6 @@ export class LoginRegisterForms {
 
   openRegister() {
     this.dialogRef.close(); // chiudo login
-    this.dialog.open(RegisterForm, { width: '450px', disableClose: true });
+    this.dialog.open(RegisterForm);
   }
 }

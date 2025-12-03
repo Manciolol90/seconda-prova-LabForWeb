@@ -1,1 +1,6 @@
-<p>slider works!</p>
+<div class="slider">
+  <div class="movie-card" *ngFor="let film of movies">
+    <img [src]="'https://image.tmdb.org/t/p/w300' + film.poster_path" />
+    <h4>{{ film.title }}</h4>
+  </div>
+</div>

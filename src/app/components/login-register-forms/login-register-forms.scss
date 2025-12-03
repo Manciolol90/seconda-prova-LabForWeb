@@ -1,21 +1,24 @@
-.form-container {
+form {
+  background: #111;
+  color: white;
+  border: rgb(37, 74, 34, 0.8) solid 1px;
+  border-radius: 10px;
+  width: 450px;
+  max-height: 680px;
+  text-align: center;
   display: flex;
   flex-direction: column;
   gap: 15px;
-  margin-bottom: 15px;
 }
 
-.buttons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
+button {
+  background-color: rgb(60, 158, 54, 0.8);
+  color: white;
 }
 
-.popup-content {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 330px;
+button:hover {
+  background-color: rgb(37, 74, 34, 0.8);
+  cursor: pointer;
 }
 
 .contenitore-img {

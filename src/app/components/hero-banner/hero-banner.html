@@ -1,1 +1,11 @@
-<p>hero-banner works!</p>
+<div class="hero" *ngIf="currentFilm">
+  <img [src]="'https://image.tmdb.org/t/p/original' + currentFilm.backdrop_path" />
+
+  <div class="hero-info">
+    <h1>{{ currentFilm.title }}</h1>
+    <p>{{ currentFilm.overview }}</p>
+  </div>
+</div>
+<div *ngIf="!currentFilm">
+  <p>Loading...</p>
+</div>
