@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MoviesService } from '../../services/movies.service';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -12,13 +12,53 @@ import { MatCardModule } from '@angular/material/card';
 })
 export class SliderComponent implements OnInit {
   movies: any[] = [];
+  autoScrollInterval: any;
+
+  @ViewChild('slider', { static: false }) slider!: ElementRef<HTMLDivElement>;
 
   constructor(private movieService: MoviesService) {}
 
   ngOnInit() {
     this.movieService.getPopularMovies().subscribe((movies: any[]) => {
-      this.movies = movies; // <-- NON .data.results
+      this.movies = movies;
       console.log('Film caricati:', this.movies);
     });
+    this.startAutoScroll();
+  }
+
+  scrollRight() {
+    const el = this.slider.nativeElement;
+
+    // Se siamo alla fine → torna all'inizio
+    if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 20) {
+      el.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      el.scrollBy({ left: 400, behavior: 'smooth' });
+    }
+  }
+
+  scrollLeft() {
+    const el = this.slider.nativeElement;
+
+    // Se siamo all'inizio → vai alla fine
+    if (el.scrollLeft <= 20) {
+      el.scrollTo({ left: el.scrollWidth, behavior: 'smooth' });
+    } else {
+      el.scrollBy({ left: -400, behavior: 'smooth' });
+    }
+  }
+  startAutoScroll() {
+    this.autoScrollInterval = setInterval(() => {
+      const el = this.slider.nativeElement;
+
+      if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 20) {
+        el.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        el.scrollBy({ left: 400, behavior: 'smooth' });
+      }
+    }, 15000);
+  }
+  ngOnDestroy() {
+    clearInterval(this.autoScrollInterval);
   }
 }

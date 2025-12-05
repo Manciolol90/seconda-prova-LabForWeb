@@ -1,25 +1,21 @@
-<div class="slider">
-  <div class="movie-card" *ngFor="let film of movies">
-    <mat-card class="example-card" appearance="outlined">
-      <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
+<div class="slider-container">
+  <!-- Freccia sinistra -->
+  <button class="nav-btn left" (click)="scrollLeft()">‹</button>
+
+  <!-- Lista film -->
+  <div class="slider" #slider>
+    <div class="movie-card" *ngFor="let film of movies">
+      <mat-card class="movie-mat-card" appearance="outlined">
         <mat-card-title>{{ film.title }}</mat-card-title>
-        <mat-card-subtitle>{{ film.vote_average }}</mat-card-subtitle>
-      </mat-card-header>
-      <img
-        mat-card-image
-        [src]="'https://image.tmdb.org/t/p/w300' + film.poster_path"
-        alt="Photo of a Shiba Inu"
-      />
-      <mat-card-content>
-        <p>
-          {{ film.overview }}
-        </p>
-      </mat-card-content>
-      <mat-card-actions>
-        <button matButton>PLAY</button>
-        <button matButton>SHARE</button>
-      </mat-card-actions>
-    </mat-card>
+        <img
+          mat-card-image
+          [src]="'https://image.tmdb.org/t/p/w300' + film.poster_path"
+          [alt]="film.title"
+        />
+      </mat-card>
+    </div>
   </div>
+
+  <!-- Freccia destra -->
+  <button class="nav-btn right" (click)="scrollRight()">›</button>
 </div>
