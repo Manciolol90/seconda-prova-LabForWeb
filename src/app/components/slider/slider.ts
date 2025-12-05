@@ -35,6 +35,7 @@ export class SliderComponent implements OnInit {
     } else {
       el.scrollBy({ left: 400, behavior: 'smooth' });
     }
+    this.resetAutoScroll(); // resetta il timer
   }
 
   scrollLeft() {
@@ -46,10 +47,12 @@ export class SliderComponent implements OnInit {
     } else {
       el.scrollBy({ left: -400, behavior: 'smooth' });
     }
+    this.resetAutoScroll(); // resetta il timer
   }
   startAutoScroll() {
     this.autoScrollInterval = setInterval(() => {
       const el = this.slider.nativeElement;
+      console.log('Auto-scroll eseguito');
 
       if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 20) {
         el.scrollTo({ left: 0, behavior: 'smooth' });
@@ -57,6 +60,10 @@ export class SliderComponent implements OnInit {
         el.scrollBy({ left: 400, behavior: 'smooth' });
       }
     }, 15000);
+  }
+  resetAutoScroll() {
+    clearInterval(this.autoScrollInterval);
+    this.startAutoScroll();
   }
   ngOnDestroy() {
     clearInterval(this.autoScrollInterval);

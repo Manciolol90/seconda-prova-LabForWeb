@@ -1,21 +1,24 @@
 <div class="slider-container">
-  <!-- Freccia sinistra -->
-  <button class="nav-btn left" (click)="scrollLeft()">‹</button>
+  <button class="nav-btn left" (click)="scrollLeft()"><</button>
 
-  <!-- Lista film -->
   <div class="slider" #slider>
     <div class="movie-card" *ngFor="let film of movies">
       <mat-card class="movie-mat-card" appearance="outlined">
-        <mat-card-title>{{ film.title }}</mat-card-title>
         <img
           mat-card-image
           [src]="'https://image.tmdb.org/t/p/w300' + film.poster_path"
           [alt]="film.title"
         />
+
+        <!-- overlay nascosto di default -->
+        <div class="movie-overlay">
+          <h3>{{ film.title }}</h3>
+          <p>{{ film.overview }}</p>
+          <span class="rating">⭐ {{ film.vote_average }}</span>
+        </div>
       </mat-card>
     </div>
   </div>
 
-  <!-- Freccia destra -->
-  <button class="nav-btn right" (click)="scrollRight()">›</button>
+  <button class="nav-btn right" (click)="scrollRight()">></button>
 </div>
