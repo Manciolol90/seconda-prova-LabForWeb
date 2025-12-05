@@ -3,10 +3,12 @@ import { Footer } from './components/footer/footer';
 import { SliderComponent } from './components/slider/slider';
 import { Header } from './components/header/header';
 import { HeroBanner } from './components/hero-banner/hero-banner';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [Footer, Header, SliderComponent, HeroBanner],
+  standalone: true,
+  imports: [Footer, Header, SliderComponent, HeroBanner, RouterModule],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

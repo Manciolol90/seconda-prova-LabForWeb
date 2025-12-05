@@ -2,7 +2,12 @@
   <button class="nav-btn left" (click)="scrollLeft()"><</button>
 
   <div class="slider" #slider>
-    <div class="movie-card" *ngFor="let film of movies">
+    <div
+      class="movie-card"
+      *ngFor="let film of movies"
+      [routerLink]="['/movie', film.id]"
+      (click)="resetAutoScroll()"
+    >
       <mat-card class="movie-mat-card" appearance="outlined">
         <img
           mat-card-image

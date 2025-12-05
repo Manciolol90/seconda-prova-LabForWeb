@@ -2,11 +2,12 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MoviesService } from '../../services/movies.service';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-slider',
   standalone: true,
-  imports: [CommonModule, MatCardModule],
+  imports: [CommonModule, MatCardModule, RouterModule],
   templateUrl: './slider.html',
   styleUrls: ['./slider.scss'],
 })

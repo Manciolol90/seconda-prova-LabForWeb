@@ -1,0 +1,21 @@
+<div class="movie-detail-container" *ngIf="movieDetails">
+  <!-- Backdrop / Hero Image -->
+  <div
+    class="backdrop"
+    [style.backgroundImage]="
+      'url(https://image.tmdb.org/t/p/original' + movieDetails.backdrop_path + ')'
+    "
+  >
+    <div class="overlay">
+      <h1>{{ movieDetails.title }}</h1>
+      <span class="rating">⭐ {{ movieDetails.vote_average }}</span>
+      <p class="overview">{{ movieDetails.overview }}</p>
+      <p class="genres">
+        <span *ngFor="let g of movieDetails.genres">{{ g.name }}</span>
+      </p>
+      <p class="release-date">Released: {{ movieDetails.release_date }}</p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!movieDetails" class="loading">Loading movie...</div>
