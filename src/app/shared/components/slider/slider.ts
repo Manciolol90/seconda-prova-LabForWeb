@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { MoviesService } from '../../services/movies.service';
+import { MoviesService } from '../../../services/movies.service';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
   templateUrl: './slider.html',
   styleUrls: ['./slider.scss'],
 })
-export class SliderComponent implements OnInit {
+export class Slider implements OnInit {
   movies: any[] = [];
   autoScrollInterval: any;
 

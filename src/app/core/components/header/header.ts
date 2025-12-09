@@ -4,13 +4,10 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { FormGroup } from '@angular/forms';
-import { FormBuilder, Validators } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
-import { LoginRegisterForms } from '../login-register-forms/login-register-forms';
 
 @Component({
   selector: 'app-header',
+  standalone: true,
   imports: [
     MatDialogModule,
     MatFormFieldModule,
@@ -25,16 +22,6 @@ export class Header {
   constructor(private dialog: MatDialog) {}
 
   accediOnClick() {
-    const dialogRef = this.dialog.open(LoginRegisterForms, {
-      width: '350px',
-    });
-
-    dialogRef.afterClosed().subscribe((data: any) => {
-      if (data) {
-        console.log('Dati login:', data);
-      } else {
-        console.log('Login annullato');
-      }
-    });
+    console.log('Apertura dialogo di login');
   }
 }
