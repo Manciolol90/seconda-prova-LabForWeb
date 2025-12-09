@@ -14,7 +14,7 @@
       name="email"
       ngModel
       required
-      email
+      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
       placeholder="Inserisci la tua email"
     />
   </mat-form-field>
@@ -28,6 +28,7 @@
       ngModel
       required
       minlength="6"
+      pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"
       placeholder="Inserisci la password"
     />
   </mat-form-field>

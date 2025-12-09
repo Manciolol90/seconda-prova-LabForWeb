@@ -1,14 +1,51 @@
+:host {
+  display: block;
+  padding: 24px 32px; // padding laterale e superiore/inferiore
+  width: 400px; // larghezza fissa della card
+  max-width: 90vw; // responsive su mobile
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+
+  // Animazioni di entrata/uscita
+  animation: slideFadeIn 0.35s ease forwards;
+}
+
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 16px; /* spazio verticale tra input e bottoni */
-  width: 100%;
+  gap: 16px; // distanza tra campi e bottoni
 
   mat-form-field {
     width: 100%;
   }
 
   button {
-    align-self: stretch; /* bottoni prendono tutta la larghezza */
+    width: 100%;
+  }
+}
+
+// Animazione per entrata
+@keyframes slideFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// Animazione per uscita
+@keyframes slideFadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
   }
 }

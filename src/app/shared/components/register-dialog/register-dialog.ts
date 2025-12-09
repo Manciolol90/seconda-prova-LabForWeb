@@ -19,6 +19,8 @@ export class RegisterDialog {
     if (form.valid) {
       console.log('Register form:', form.value);
       this.dialogRef.close();
+    } else {
+      console.log('Form non valido');
     }
   }
 }

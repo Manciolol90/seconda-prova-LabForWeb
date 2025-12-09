@@ -20,6 +20,8 @@ export class LoginDialog {
     if (form.valid) {
       console.log('Login form:', form.value);
       this.dialogRef.close();
+    } else {
+      console.log('Form non valido');
     }
   }
 
