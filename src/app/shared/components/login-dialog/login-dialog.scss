@@ -1,0 +1,14 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* spazio verticale tra input e bottoni */
+  width: 100%;
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  button {
+    align-self: stretch; /* bottoni prendono tutta la larghezza */
+  }
+}

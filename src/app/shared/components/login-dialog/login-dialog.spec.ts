@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Header } from './header';
+import { LoginDialog } from './login-dialog';
 
-describe('Header', () => {
-  let component: Header;
-  let fixture: ComponentFixture<Header>;
+describe('LoginDialog', () => {
+  let component: LoginDialog;
+  let fixture: ComponentFixture<LoginDialog>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Header]
+      imports: [LoginDialog]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Header);
+    fixture = TestBed.createComponent(LoginDialog);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
