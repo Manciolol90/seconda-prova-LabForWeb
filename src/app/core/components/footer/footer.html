@@ -1,87 +1,46 @@
-<footer>
-  <div id="img-footer">
-    <img src="LabTV-Loghi/2.png" alt="" />
-  </div>
-  <!-- immagini sprite per gestire i social-->
-  <div class="box-social">
-    <div class="sprite youtube"></div>
-    <div class="sprite instagram"></div>
-    <div class="sprite facebook2"></div>
+<footer class="footer">
+  <!-- LOGO -->
+  <div class="footer-logo">
+    <img src="LabTV-Loghi/2.png" alt="Logo LabTV" />
   </div>
 
-  <!-- Checkbox nascosto per il popup contatti -->
-  <input type="checkbox" id="contatti" />
+  <!-- SOCIAL -->
+  <div class="footer-social">
+    <button class="social-btn youtube"></button>
+    <button class="social-btn instagram"></button>
+    <button class="social-btn facebook"></button>
+  </div>
 
-  <!-- Bottone "Contattaci" -->
-  <label class="header-right open" for="contatti">
-    <p>Contattaci</p>
-  </label>
-
-  <!-- Popup Contatti -->
-  <div class="popup">
-    <form id="contactForm" action="#" method="post" class="popup-content">
-      <h2>Contattaci</h2>
-
-      <div class="box-inserimento">
-        <label for="nome"><b>Nome</b></label>
-        <input type="text" id="nome" name="nome" placeholder="Inserisci il tuo nome" required />
-        <span class="msg-errore"></span>
-      </div>
-
-      <div class="box-inserimento">
-        <label for="cognome"><b>Cognome</b></label>
-        <input
-          type="text"
-          id="cognome"
-          name="cognome"
-          placeholder="Inserisci il tuo cognome"
-          required
-        />
-        <span class="msg-errore"></span>
-      </div>
-
-      <div class="box-inserimento">
-        <label for="email"><b>Email</b></label>
-        <input type="email" id="email" name="email" placeholder="Inserisci la tua email" required />
-        <span class="msg-errore"></span>
-      </div>
-
-      <div class="box-inserimento">
-        <label for="telefono"><b>Telefono</b></label>
-        <input
-          type="tel"
-          id="telefono"
-          name="telefono"
-          placeholder="Inserisci il tuo numero di telefono"
-        />
-        <span class="msg-errore"></span>
-      </div>
-
-      <div class="box-inserimento">
-        <label for="messaggio"><b>Messaggio</b></label>
-        <textarea
-          id="messaggio"
-          name="messaggio"
-          rows="5"
-          placeholder="Scrivi qui il tuo messaggio..."
-          required
-        ></textarea>
-        <span class="msg-errore"></span>
-      </div>
-
-      <div class="box-inserimento">
-        <label>
-          <input type="checkbox" id="privacy" name="privacy" required />
-          Accetto l'informativa sulla privacy
-        </label>
-        <span class="msg-errore"></span>
-      </div>
-
-      <div class="box-inserimento">
-        <button type="submit">Invia</button>
-      </div>
-
-      <label for="contatti" class="close">Chiudi</label>
-    </form>
+  <!-- CONTATTI -->
+  <div class="footer-contact">
+    <button class="contact-btn" (click)="openContact()">Contattaci</button>
   </div>
 </footer>
+
+<!-- POPUP MODAL CONTATTI -->
+<div class="modal-overlay" *ngIf="contactOpen" (click)="closeContact()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <h2>Contattaci</h2>
+
+    <form #contactForm="ngForm" (ngSubmit)="send(contactForm)">
+      <div class="input-box">
+        <label>Nome</label>
+        <input type="text" name="nome" ngModel required />
+      </div>
+
+      <div class="input-box">
+        <label>Email</label>
+        <input type="email" name="email" ngModel required />
+      </div>
+
+      <div class="input-box">
+        <label>Messaggio</label>
+        <textarea name="messaggio" rows="5" ngModel required></textarea>
+      </div>
+
+      <button type="submit" class="send-btn" [disabled]="contactForm.invalid">Invia</button>
+    </form>
+
+    <button class="close-btn" (click)="closeContact()">Chiudi</button>
+  </div>
+</div>

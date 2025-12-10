@@ -1,8 +1,5 @@
 {
-  "posts": [],
-  "restaurants": [],
   "movies": [],
-  "pokemons": [],
   "users": [
     {
       "email": "pippo@gmail.com",
@@ -10,5 +7,6 @@
       "nome": "pippo rossi",
       "id": 1
     }
-  ]
+  ],
+  "purchases": []
 }
