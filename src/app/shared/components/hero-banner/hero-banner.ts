@@ -14,6 +14,7 @@ export class HeroBanner implements OnInit {
   films: any[] = [];
   currentFilmIndex = 0;
   currentFilm: any = null;
+  isFading: boolean = false;
 
   constructor(private moviesService: MoviesService) {}
 
@@ -23,8 +24,13 @@ export class HeroBanner implements OnInit {
       this.currentFilm = this.films[0];
 
       setInterval(() => {
-        this.currentFilmIndex = (this.currentFilmIndex + 1) % this.films.length;
-        this.currentFilm = this.films[this.currentFilmIndex];
+        this.isFading = true;
+
+        setTimeout(() => {
+          this.currentFilmIndex = (this.currentFilmIndex + 1) % this.films.length;
+          this.currentFilm = this.films[this.currentFilmIndex];
+          this.isFading = false;
+        }, 500); // durata fade out + swap + fade in
       }, 5000);
     });
   }

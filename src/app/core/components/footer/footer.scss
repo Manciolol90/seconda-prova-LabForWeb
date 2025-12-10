@@ -1,0 +1,145 @@
+.footer {
+  background: #141414;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+
+  .footer-logo img {
+    width: 120px;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 15px;
+
+    .social-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      background-size: cover;
+      transition: transform 0.2s;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+
+      // &.youtube {
+      //   background-image: url('assets/social/youtube.png');
+      // }
+      // &.instagram {
+      //   background-image: url('assets/social/instagram.png');
+      // }
+      // &.facebook {
+      //   background-image: url('assets/social/facebook.png');
+      // }
+    }
+  }
+
+  .footer-contact .contact-btn {
+    background-color: rgb(60, 158, 54, 0.8);
+    width: 7em;
+    height: 3.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    color: white;
+
+    &:hover {
+      background-color: rgb(37, 74, 34, 0.8);
+      cursor: pointer;
+    }
+  }
+}
+
+/* MODAL CONTATTI */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.modal {
+  background: #fff;
+  padding: 25px;
+  width: 350px;
+  border-radius: 12px;
+  animation: popIn 0.3s ease forwards;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  h2 {
+    margin: 0;
+    text-align: center;
+  }
+
+  .input-box {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  input,
+  textarea {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+
+  .send-btn {
+    padding: 10px;
+    background: #ff0048;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+
+  .close-btn {
+    margin-top: 10px;
+    align-self: center;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #555;
+
+    &:hover {
+      color: black;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

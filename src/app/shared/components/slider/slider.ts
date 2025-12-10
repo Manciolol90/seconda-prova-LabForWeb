@@ -66,6 +66,14 @@ export class Slider implements OnInit {
     clearInterval(this.autoScrollInterval);
     this.startAutoScroll();
   }
+  pauseAutoScroll() {
+    clearInterval(this.autoScrollInterval);
+  }
+
+  resumeAutoScroll() {
+    this.resetAutoScroll();
+  }
+
   ngOnDestroy() {
     clearInterval(this.autoScrollInterval);
   }

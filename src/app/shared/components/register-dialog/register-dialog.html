@@ -3,7 +3,15 @@
 <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="login-form">
   <mat-form-field appearance="fill">
     <mat-label>Nome</mat-label>
-    <input matInput name="name" ngModel required placeholder="Inserisci il tuo nome" />
+    <input
+      matInput
+      name="name"
+      ngModel
+      required
+      #nameModel="ngModel"
+      placeholder="Inserisci il tuo nome"
+    />
+    <mat-error *ngIf="nameModel.touched && nameModel.invalid"> Il nome è obbligatorio </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
@@ -14,9 +22,13 @@
       name="email"
       ngModel
       required
+      #emailModel2="ngModel"
       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
       placeholder="Inserisci la tua email"
     />
+    <mat-error *ngIf="emailModel2.touched && emailModel2.errors?.['pattern']">
+      Email non valida
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
@@ -28,9 +40,13 @@
       ngModel
       required
       minlength="6"
+      #passwordModel2="ngModel"
       pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"
       placeholder="Inserisci la password"
     />
+    <mat-error *ngIf="passwordModel2.touched && passwordModel2.errors?.['pattern']">
+      La password deve contenere almeno una lettera e un numero, 6 caratteri minimo.
+    </mat-error>
   </mat-form-field>
 
   <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">

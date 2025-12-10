@@ -9,10 +9,14 @@
       name="email"
       ngModel
       required
+      #emailModel="ngModel"
       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
       placeholder="Inserisci la tua email"
     />
-    <mat-error *ngIf="loginForm.controls.email?.errors?.['pattern']"> Email non valida </mat-error>
+
+    <mat-error *ngIf="emailModel.touched && emailModel.errors?.['pattern']">
+      Email non valida
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
@@ -24,10 +28,12 @@
       ngModel
       required
       minlength="6"
+      #passwordModel="ngModel"
       pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"
       placeholder="Inserisci la password"
     />
-    <mat-error *ngIf="loginForm.controls.password?.errors?.['pattern']">
+
+    <mat-error *ngIf="passwordModel.touched && passwordModel.errors?.['pattern']">
       La password deve contenere almeno una lettera e un numero, 6 caratteri minimo.
     </mat-error>
   </mat-form-field>

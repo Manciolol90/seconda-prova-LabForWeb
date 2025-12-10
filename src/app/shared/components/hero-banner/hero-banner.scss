@@ -4,6 +4,12 @@
   overflow: hidden;
   border-radius: 12px;
   color: #fff;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.hero.fade {
+  opacity: 0;
 }
 
 .hero img {

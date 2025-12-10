@@ -1,4 +1,4 @@
-<div class="hero" *ngIf="currentFilm">
+<div class="hero" *ngIf="currentFilm" [class.fade]="isFading">
   <img [src]="'https://image.tmdb.org/t/p/original' + currentFilm.backdrop_path" />
 
   <div class="hero-info">
@@ -6,6 +6,7 @@
     <p>{{ currentFilm.overview }}</p>
   </div>
 </div>
+
 <div *ngIf="!currentFilm">
   <p>Loading...</p>
 </div>
