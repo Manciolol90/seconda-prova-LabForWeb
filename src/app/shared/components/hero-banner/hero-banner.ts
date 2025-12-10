@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { MoviesService } from '../../../services/movies.service';
 import { CommonModule } from '@angular/common';
+import { MovieDbService } from '../../../services/movie-db.service';
 
 @Component({
   selector: 'app-hero-banner',
@@ -16,10 +17,10 @@ export class HeroBanner implements OnInit {
   currentFilm: any = null;
   isFading: boolean = false;
 
-  constructor(private moviesService: MoviesService) {}
+  constructor(private movieDbService: MovieDbService) {}
 
   ngOnInit(): void {
-    this.moviesService.getPopularMovies().subscribe((res) => {
+    this.movieDbService.getSavedMovies().subscribe((res) => {
       this.films = res;
       this.currentFilm = this.films[0];
 

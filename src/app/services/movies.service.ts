@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Movie } from '../models/movie.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class MoviesService {
   getPopularMovies() {
     return this.http
       .get<any>(`${this.apiUrl}/movie/popular?api_key=${this.apiKey}`)
-      .pipe(map((res) => res.results));
+      .pipe(map((res) => res.results as Movie[]));
   }
   getMovieDetails(id: number) {
     return this.http.get(`${this.apiUrl}/movie/${id}?api_key=${this.apiKey}&language=it-IT`);
