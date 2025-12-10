@@ -21,12 +21,13 @@
 
 .movie-card {
   flex: 0 0 auto;
+  padding: 12px 0;
 }
 
 .movie-mat-card {
   width: 250px;
-  height: 360px; /* altezza totale fissa */
-  position: relative; /* necessario per overlay */
+  height: 360px;
+  position: relative;
   cursor: pointer;
   overflow: hidden;
   display: flex;
