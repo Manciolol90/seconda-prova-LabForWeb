@@ -3,11 +3,7 @@
     {
       "adult": false,
       "backdrop_path": "/min9ZUDZbiguTiQ7yz1Hbqk78HT.jpg",
-      "genre_ids": [
-        878,
-        12,
-        28
-      ],
+      "genre_ids": [878, 12, 28],
       "id": 533533,
       "original_language": "en",
       "original_title": "TRON: Ares",
@@ -24,11 +20,7 @@
     {
       "adult": false,
       "backdrop_path": "/lZYMXx74pWmbj5Q5jp1QaMvmuuR.jpg",
-      "genre_ids": [
-        28,
-        14,
-        53
-      ],
+      "genre_ids": [28, 14, 53],
       "id": 1180831,
       "original_language": "no",
       "original_title": "Troll 2",
@@ -45,13 +37,7 @@
     {
       "adult": false,
       "backdrop_path": "/5h2EsPKNDdB3MAtOk9MB9Ycg9Rz.jpg",
-      "genre_ids": [
-        16,
-        35,
-        12,
-        10751,
-        9648
-      ],
+      "genre_ids": [16, 35, 12, 10751, 9648],
       "id": 1084242,
       "original_language": "en",
       "original_title": "Zootopia 2",
@@ -68,11 +54,7 @@
     {
       "adult": false,
       "backdrop_path": "/w57nxiBIODAYHLRs1xmrCY9zEFe.jpg",
-      "genre_ids": [
-        28,
-        18,
-        14
-      ],
+      "genre_ids": [28, 18, 14],
       "id": 1083637,
       "original_language": "kn",
       "original_title": "ಕಾಂತಾರ: ಅಧ್ಯಾಯ - ೧",
@@ -89,10 +71,7 @@
     {
       "adult": false,
       "backdrop_path": "/bhhgVjnZ69ZoCGYvVT3djnAWSJA.jpg",
-      "genre_ids": [
-        27,
-        53
-      ],
+      "genre_ids": [27, 53],
       "id": 1228246,
       "original_language": "en",
       "original_title": "Five Nights at Freddy's 2",
@@ -109,12 +88,7 @@
     {
       "adult": false,
       "backdrop_path": "/3k1PKmzNEosWFaOR1yC9ZKIYqmm.jpg",
-      "genre_ids": [
-        14,
-        16,
-        28,
-        878
-      ],
+      "genre_ids": [14, 16, 28, 878],
       "id": 23527,
       "original_language": "ru",
       "original_title": "Первый отряд",
@@ -131,11 +105,7 @@
     {
       "adult": false,
       "backdrop_path": "/otSXrUWOTX7tTigLBMFKOV8n47r.jpg",
-      "genre_ids": [
-        27,
-        14,
-        10749
-      ],
+      "genre_ids": [27, 14, 10749],
       "id": 1246049,
       "original_language": "fr",
       "original_title": "Dracula",
@@ -152,11 +122,7 @@
     {
       "adult": false,
       "backdrop_path": "/pAyImoslSnpMgjRwhaS5ZEdl8UI.jpg",
-      "genre_ids": [
-        28,
-        53,
-        80
-      ],
+      "genre_ids": [28, 53, 80],
       "id": 1448560,
       "original_language": "en",
       "original_title": "Wildcat",
@@ -173,11 +139,7 @@
     {
       "adult": false,
       "backdrop_path": "/lf8IZ86ajGpgbuyHCZrXUeAMmvy.jpg",
-      "genre_ids": [
-        28,
-        12,
-        878
-      ],
+      "genre_ids": [28, 12, 878],
       "id": 1033462,
       "original_language": "zh",
       "original_title": "749局",
@@ -194,11 +156,7 @@
     {
       "adult": false,
       "backdrop_path": "/ebyxeBh56QNXxSJgTnmz7fXAlwk.jpg",
-      "genre_ids": [
-        28,
-        878,
-        12
-      ],
+      "genre_ids": [28, 878, 12],
       "id": 1242898,
       "original_language": "en",
       "original_title": "Predator: Badlands",
@@ -215,11 +173,7 @@
     {
       "adult": false,
       "backdrop_path": "/4BtL2vvEufDXDP4u6xQjjQ1Y2aT.jpg",
-      "genre_ids": [
-        28,
-        80,
-        53
-      ],
+      "genre_ids": [28, 80, 53],
       "id": 1419406,
       "original_language": "zh",
       "original_title": "捕风追影",
@@ -236,12 +190,7 @@
     {
       "adult": false,
       "backdrop_path": "/rI4waA7VlRAynrYUUpiPScsdPm8.jpg",
-      "genre_ids": [
-        16,
-        28,
-        10749,
-        14
-      ],
+      "genre_ids": [16, 28, 10749, 14],
       "id": 1218925,
       "original_language": "ja",
       "original_title": "チェンソーマン レゼ篇",
@@ -258,10 +207,7 @@
     {
       "adult": false,
       "backdrop_path": "/8lqfrOBQ2EcY7znD3LxTYcvlh25.jpg",
-      "genre_ids": [
-        28,
-        80
-      ],
+      "genre_ids": [28, 80],
       "id": 949709,
       "original_language": "zh",
       "original_title": "危机航线",
@@ -278,11 +224,7 @@
     {
       "adult": false,
       "backdrop_path": "/l8pwO23MCvqYumzozpxynCNfck1.jpg",
-      "genre_ids": [
-        14,
-        12,
-        10749
-      ],
+      "genre_ids": [14, 12, 10749],
       "id": 967941,
       "original_language": "en",
       "original_title": "Wicked: For Good",
@@ -299,10 +241,7 @@
     {
       "adult": false,
       "backdrop_path": "/q9bvjUkpKltPE0S9oxci2pmD1Zx.jpg",
-      "genre_ids": [
-        878,
-        28
-      ],
+      "genre_ids": [878, 28],
       "id": 1309012,
       "original_language": "en",
       "original_title": "Altered",
@@ -319,9 +258,7 @@
     {
       "adult": false,
       "backdrop_path": "/7cQjb8cRbRjF5tM5gOCnqsvC0iT.jpg",
-      "genre_ids": [
-        53
-      ],
+      "genre_ids": [53],
       "id": 1561955,
       "original_language": "ta",
       "original_title": "ஸ்டீபன்",
@@ -338,11 +275,7 @@
     {
       "adult": false,
       "backdrop_path": "/hpXBJxLD2SEf8l2CspmSeiHrBKX.jpg",
-      "genre_ids": [
-        18,
-        14,
-        27
-      ],
+      "genre_ids": [18, 14, 27],
       "id": 1062722,
       "original_language": "en",
       "original_title": "Frankenstein",
@@ -359,10 +292,7 @@
     {
       "adult": false,
       "backdrop_path": "/iZLqwEwUViJdSkGVjePGhxYzbDb.jpg",
-      "genre_ids": [
-        878,
-        53
-      ],
+      "genre_ids": [878, 53],
       "id": 755898,
       "original_language": "en",
       "original_title": "War of the Worlds",
@@ -379,10 +309,7 @@
     {
       "adult": false,
       "backdrop_path": "/7nAVXGHHtaNcdsqvDXmY6R9N0fG.jpg",
-      "genre_ids": [
-        28,
-        35
-      ],
+      "genre_ids": [28, 35],
       "id": 1363123,
       "original_language": "en",
       "original_title": "The Family Plan 2",
@@ -399,12 +326,7 @@
     {
       "adult": false,
       "backdrop_path": "/9tOkjBEiiGcaClgJFtwocStZvIT.jpg",
-      "genre_ids": [
-        16,
-        12,
-        10751,
-        35
-      ],
+      "genre_ids": [16, 12, 10751, 35],
       "id": 269149,
       "original_language": "en",
       "original_title": "Zootopia",
