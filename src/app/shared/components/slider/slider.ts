@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { MoviesService } from '../../../services/movies.service';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
+import { MovieDbService } from '../../../services/movie-db.service';
 
 @Component({
   selector: 'app-slider',
@@ -17,10 +17,10 @@ export class Slider implements OnInit {
 
   @ViewChild('slider', { static: false }) slider!: ElementRef<HTMLDivElement>;
 
-  constructor(private movieService: MoviesService) {}
+  constructor(private movieDbService: MovieDbService) {}
 
   ngOnInit() {
-    this.movieService.getPopularMovies().subscribe((movies: any[]) => {
+    this.movieDbService.getSavedMovies().subscribe((movies: any[]) => {
       this.movies = movies;
       console.log('Film caricati:', this.movies);
     });

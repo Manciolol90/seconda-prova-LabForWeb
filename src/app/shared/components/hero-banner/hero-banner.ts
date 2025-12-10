@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { MoviesService } from '../../../services/movies.service';
 import { CommonModule } from '@angular/common';
 import { MovieDbService } from '../../../services/movie-db.service';
 
