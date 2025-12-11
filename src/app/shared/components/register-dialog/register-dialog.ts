@@ -5,6 +5,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../services/auth.service';
+
+interface RegisterUser {
+  id?: number;
+  nome: string;
+  email: string;
+  password: string;
+}
 
 @Component({
   selector: 'app-register-dialog',
@@ -14,14 +22,22 @@ import { CommonModule } from '@angular/common';
   styleUrl: './register-dialog.scss',
 })
 export class RegisterDialog {
-  constructor(private dialogRef: MatDialogRef<RegisterDialog>) {}
+  constructor(private dialogRef: MatDialogRef<RegisterDialog>, private authService: AuthService) {}
 
   onSubmit(form: NgForm) {
-    if (form.valid) {
-      console.log('Register form:', form.value);
-      this.dialogRef.close();
-    } else {
-      console.log('Form non valido');
-    }
+    if (!form.valid) return;
+
+    const { name, email, password } = form.value;
+    const user: RegisterUser = { nome: name, email, password };
+
+    this.authService.register(user).subscribe({
+      next: (registeredUser: RegisterUser) => {
+        console.log('Registrazione avvenuta:', registeredUser);
+        this.dialogRef.close({ registeredUser });
+      },
+      error: (err: any) => {
+        console.error('Registrazione fallita', err);
+      },
+    });
   }
 }

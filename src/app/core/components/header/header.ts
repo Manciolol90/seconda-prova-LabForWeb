@@ -35,7 +35,6 @@ export class Header implements OnDestroy {
 
   accediOnClick() {
     if (this.isLoggedIn) {
-      // Se già loggato → logout
       this.authService.logout();
       return;
     }
@@ -48,12 +47,12 @@ export class Header implements OnDestroy {
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'register') {
         this.openRegisterDialog();
-      }
-      if (result?.email && result?.password) {
-        // login con AuthService
+      } else if (result?.email && result?.password) {
         this.authService.login(result.email, result.password).subscribe({
-          next: () => console.log('Login effettuato con successo'),
-          error: (err: any) => console.error('Login fallito', err),
+          next: (res) => {
+            console.log('Login effettuato con successo', res);
+          },
+          error: (err) => console.error('Login fallito', err),
         });
       }
     });
