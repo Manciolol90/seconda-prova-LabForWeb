@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { HeroBanner } from '../../shared/components/hero-banner/hero-banner';
 import { Slider } from '../../shared/components/slider/slider';
-import { CommonModule } from '@angular/common';
 import { MoviesService } from '../../services/movies.service';
 import { MovieDbService } from '../../services/movie-db.service';
+import { AuthService } from '../../services/auth.service';
 import { Movie } from '../../models/movie.model';
 
 @Component({
@@ -14,28 +15,40 @@ import { Movie } from '../../models/movie.model';
   styleUrl: './home-page.scss',
 })
 export class HomePage implements OnInit {
-  constructor(private moviesService: MoviesService, private movieDb: MovieDbService) {}
+  movies: Movie[] = [];
+  loading = true;
+
+  constructor(
+    private tmdb: MoviesService,
+    private localDb: MovieDbService,
+    private auth: AuthService
+  ) {}
 
   ngOnInit() {
-    this.savePopularMoviesToDb();
+    // ogni volta che cambia lo stato del login → ricarico i film
+    this.auth.isLoggedIn$.subscribe(() => {
+      this.loadMovies();
+    });
+
+    this.loadMovies(); // prima chiamata
   }
 
-  /** STEP 2 — Salvataggio film TMDB nel JSON server */
-  savePopularMoviesToDb() {
-    this.moviesService.getPopularMovies().subscribe((movies) => {
-      movies.forEach((movie: Movie) => {
-        // 1) controlla se è già nel DB
-        this.movieDb.findMovieByTmdbId(movie.id).subscribe((found) => {
-          if (found.length === 0) {
-            // 2) se NON esiste → lo salvo
-            this.movieDb.saveMovie(movie).subscribe(() => {
-              console.log('✔ Salvato nel DB:', movie.title);
-            });
-          } else {
-            console.log('⏭ Già presente:', movie.title);
-          }
-        });
-      });
+  loadMovies() {
+    this.loading = true;
+
+    const useLocal = this.auth.getToken() !== null;
+
+    const source = useLocal ? this.localDb.getSavedMovies() : this.tmdb.getPopularMovies();
+
+    source.subscribe({
+      next: (movies) => {
+        this.movies = movies;
+        this.loading = false;
+      },
+      error: () => {
+        console.error('Errore nel caricamento film');
+        this.loading = false;
+      },
     });
   }
 }

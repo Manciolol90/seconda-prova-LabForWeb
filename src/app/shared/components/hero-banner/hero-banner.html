@@ -1,4 +1,4 @@
-<div class="hero" *ngIf="currentFilm" [class.fade]="isFading">
+<div class="hero" *ngIf="currentFilm; else loadingHero" [class.fade]="isFading">
   <img [src]="'https://image.tmdb.org/t/p/original' + currentFilm.backdrop_path" />
 
   <div class="hero-info">
@@ -7,6 +7,6 @@
   </div>
 </div>
 
-<div *ngIf="!currentFilm">
-  <p class="errore">Il server è crashato o è spento! Si prega di riprovare più tardi.</p>
-</div>
+<ng-template #loadingHero>
+  <p class="errore">Caricamento film in corso o il server è spento...</p>
+</ng-template>

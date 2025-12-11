@@ -1,27 +1,39 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Movie } from '../models/movie.model';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MovieDbService {
-  private dbUrl = 'http://localhost:3000'; // JSON server
+  private dbUrl = 'http://localhost:3000';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
-  /** Salva un film nel db.json */
-  saveMovie(movie: Movie) {
-    return this.http.post(`${this.dbUrl}/movies`, {
-      ...movie,
-      tmdbId: movie.id, // salviamo l'id TMDB
-    });
+  private authHeaders(): { headers: HttpHeaders } {
+    const token = this.authService.getToken();
+    return {
+      headers: new HttpHeaders({
+        Authorization: token ? `Bearer ${token}` : '',
+      }),
+    };
+  }
+  saveMovie(movie: Movie): Observable<any> {
+    return this.http.post(
+      `${this.dbUrl}/movies`,
+      { ...movie, tmdbId: movie.id },
+      this.authHeaders()
+    );
   }
 
-  /** Ottiene tutti i film salvati nel db.json */
   getSavedMovies(): Observable<Movie[]> {
-    return this.http.get<Movie[]>(`${this.dbUrl}/movies`);
+    return this.http.get<Movie[]>(`${this.dbUrl}/movies`, this.authHeaders());
+  }
+
+  findMovieByTmdbId(tmdbId: number): Observable<Movie[]> {
+    return this.http.get<Movie[]>(`${this.dbUrl}/movies?tmdbId=${tmdbId}`, this.authHeaders());
   }
 
   /** Controlla se un film è già salvato (per non duplicare) */
@@ -30,7 +42,4 @@ export class MovieDbService {
   }
 
   /** Cerca film tramite id TMDB */
-  findMovieByTmdbId(tmdbId: number): Observable<Movie[]> {
-    return this.http.get<Movie[]>(`${this.dbUrl}/movies?tmdbId=${tmdbId}`);
-  }
 }

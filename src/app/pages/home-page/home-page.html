@@ -1,2 +1,6 @@
-<app-hero-banner></app-hero-banner>
-<app-slider></app-slider>
+<ng-container *ngIf="!loading && movies.length > 0">
+  <app-hero-banner [movies]="movies"></app-hero-banner>
+  <app-slider [movies]="movies"></app-slider>
+</ng-container>
+
+<div *ngIf="loading">Caricamento...</div>

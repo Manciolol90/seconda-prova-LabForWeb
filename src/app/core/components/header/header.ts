@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,6 +7,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LoginDialog } from '../../../shared/components/login-dialog/login-dialog';
 import { RegisterDialog } from '../../../shared/components/register-dialog/register-dialog';
 import { AuthService } from '../../../services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -17,18 +18,17 @@ import { AuthService } from '../../../services/auth.service';
     MatInputModule,
     MatButtonModule,
     MatCheckboxModule,
-    LoginDialog,
-    RegisterDialog,
   ],
   templateUrl: './header.html',
-  styleUrl: './header.scss',
+  styleUrls: ['./header.scss'],
 })
-export class Header {
+export class Header implements OnDestroy {
   isLoggedIn = false;
+  private authSub?: Subscription;
 
   constructor(private dialog: MatDialog, private authService: AuthService) {
-    // sottoscrizione allo stato di login
-    this.authService.isLoggedIn$.subscribe((status: boolean) => {
+    // sottoscrizione allo stato di login — protetta da undefined grazie alla correzione dell'AuthService
+    this.authSub = this.authService.isLoggedIn$.subscribe((status: boolean) => {
       this.isLoggedIn = status;
     });
   }
@@ -64,9 +64,12 @@ export class Header {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.registeredUser) {
-        // registrazione → opzionale login automatico
         console.log('Registrazione avvenuta', result.registeredUser);
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.authSub?.unsubscribe();
   }
 }

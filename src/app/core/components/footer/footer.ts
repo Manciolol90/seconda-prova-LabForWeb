@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './footer.html',
-  styleUrl: './footer.scss',
+  styleUrls: ['./footer.scss'],
 })
 export class Footer {
   contactOpen = false;

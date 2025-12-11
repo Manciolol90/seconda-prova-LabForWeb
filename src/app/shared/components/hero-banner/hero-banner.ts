@@ -1,22 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MovieDbService } from '../../../services/movie-db.service';
 import { MoviesService } from '../../../services/movies.service';
 import { AuthService } from '../../../services/auth.service';
 import { Movie } from '../../../models/movie.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-hero-banner',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './hero-banner.html',
-  styleUrl: './hero-banner.scss',
+  styleUrls: ['./hero-banner.scss'],
 })
-export class HeroBanner implements OnInit {
+export class HeroBanner implements OnInit, OnDestroy {
+  @Input() movies: Movie[] = [];
+
   films: Movie[] = [];
   currentFilmIndex = 0;
   currentFilm: Movie | null = null;
   isFading: boolean = false;
+  private authSub!: Subscription;
+  private rotationInterval: any;
 
   constructor(
     private movieDbService: MovieDbService,
@@ -25,35 +30,44 @@ export class HeroBanner implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Sottoscriviti allo stato login
-    this.authService.isLoggedIn$.subscribe((isLoggedIn) => {
+    // Caricamento iniziale da TMDB
+    this.loadMoviesFromTmdb();
+
+    // Poi, se loggato, sovrascrivi con DB
+    this.authService.isLoggedIn$.subscribe((isLoggedIn: any) => {
       if (isLoggedIn) {
         this.loadMoviesFromDb();
-      } else {
-        this.loadMoviesFromTmdb();
       }
     });
   }
 
-  loadMoviesFromTmdb() {
+  ngOnDestroy(): void {
+    clearInterval(this.rotationInterval);
+    this.authSub?.unsubscribe();
+  }
+
+  private loadMoviesFromTmdb() {
     this.moviesService.getPopularMovies().subscribe((movies) => {
       this.films = movies;
       this.startRotation();
     });
   }
 
-  loadMoviesFromDb() {
+  private loadMoviesFromDb() {
     this.movieDbService.getSavedMovies().subscribe((movies) => {
       this.films = movies;
       this.startRotation();
     });
   }
 
-  startRotation() {
-    if (this.films.length === 0) return;
+  private startRotation() {
+    if (!this.films || this.films.length === 0) return;
 
+    this.currentFilmIndex = 0;
     this.currentFilm = this.films[0];
-    setInterval(() => {
+    clearInterval(this.rotationInterval);
+
+    this.rotationInterval = setInterval(() => {
       this.isFading = true;
 
       setTimeout(() => {

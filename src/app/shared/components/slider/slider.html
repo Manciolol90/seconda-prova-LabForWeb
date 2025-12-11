@@ -7,8 +7,8 @@
       *ngFor="let film of movies"
       [routerLink]="['/movie', film.id]"
       (click)="resetAutoScroll()"
-      (mouseenter)="pauseAutoScroll()"
-      (mouseleave)="resumeAutoScroll()"
+      (mouseenter)="resetAutoScroll()"
+      (mouseleave)="startAutoScroll()"
     >
       <mat-card class="movie-mat-card" appearance="outlined">
         <img

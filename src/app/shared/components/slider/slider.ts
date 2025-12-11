@@ -1,10 +1,12 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
 import { MovieDbService } from '../../../services/movie-db.service';
 import { AuthService } from '../../../services/auth.service';
 import { MoviesService } from '../../../services/movies.service';
+import { Subscription } from 'rxjs';
+import { Movie } from '../../../models/movie.model';
 
 @Component({
   selector: 'app-slider',
@@ -13,9 +15,11 @@ import { MoviesService } from '../../../services/movies.service';
   templateUrl: './slider.html',
   styleUrls: ['./slider.scss'],
 })
-export class Slider implements OnInit {
-  movies: any[] = [];
+export class Slider implements OnInit, OnDestroy {
+  @Input() movies: Movie[] = [];
+
   autoScrollInterval: any;
+  authSub!: Subscription;
 
   @ViewChild('slider', { static: false }) slider!: ElementRef<HTMLDivElement>;
 
@@ -26,13 +30,20 @@ export class Slider implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.authService.isLoggedIn$.subscribe((isLoggedIn) => {
+    // Carica subito film da TMDB
+    this.loadMoviesFromTmdb();
+
+    // Aggiorna film dopo login
+    this.authSub = this.authService.isLoggedIn$.subscribe((isLoggedIn: any) => {
       if (isLoggedIn) {
         this.loadMoviesFromDb();
-      } else {
-        this.loadMoviesFromTmdb();
       }
     });
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.autoScrollInterval);
+    this.authSub?.unsubscribe();
   }
 
   loadMoviesFromTmdb() {
@@ -51,32 +62,28 @@ export class Slider implements OnInit {
 
   scrollRight() {
     const el = this.slider.nativeElement;
-
-    // Se siamo alla fine → torna all'inizio
     if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 20) {
       el.scrollTo({ left: 0, behavior: 'smooth' });
     } else {
       el.scrollBy({ left: 400, behavior: 'smooth' });
     }
-    this.resetAutoScroll(); // resetta il timer
+    this.resetAutoScroll();
   }
 
   scrollLeft() {
     const el = this.slider.nativeElement;
-
-    // Se siamo all'inizio → vai alla fine
     if (el.scrollLeft <= 20) {
       el.scrollTo({ left: el.scrollWidth, behavior: 'smooth' });
     } else {
       el.scrollBy({ left: -400, behavior: 'smooth' });
     }
-    this.resetAutoScroll(); // resetta il timer
+    this.resetAutoScroll();
   }
+
   startAutoScroll() {
+    clearInterval(this.autoScrollInterval);
     this.autoScrollInterval = setInterval(() => {
       const el = this.slider.nativeElement;
-      console.log('Auto-scroll eseguito');
-
       if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 20) {
         el.scrollTo({ left: 0, behavior: 'smooth' });
       } else {
@@ -84,19 +91,9 @@ export class Slider implements OnInit {
       }
     }, 15000);
   }
+
   resetAutoScroll() {
     clearInterval(this.autoScrollInterval);
     this.startAutoScroll();
-  }
-  pauseAutoScroll() {
-    clearInterval(this.autoScrollInterval);
-  }
-
-  resumeAutoScroll() {
-    this.resetAutoScroll();
-  }
-
-  ngOnDestroy() {
-    clearInterval(this.autoScrollInterval);
   }
 }

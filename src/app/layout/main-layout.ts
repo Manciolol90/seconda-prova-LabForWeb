@@ -8,6 +8,6 @@ import { Footer } from '../core/components/footer/footer';
   standalone: true,
   imports: [RouterOutlet, Header, Footer],
   templateUrl: './main-layout.html',
-  styleUrl: './main-layout.scss',
+  styleUrls: ['./main-layout.scss'],
 })
 export class MainLayout {}
