@@ -20,11 +20,10 @@ header {
   position: sticky;
   top: 0;
   background-color: rgba(0, 0, 0, 0.485);
-  z-index: 3; /* per farlo rimanere sopra al video hero */
+  z-index: 2; /* per farlo rimanere sopra al video hero */
 }
 
 .header-left {
-  margin-left: 1.5em;
   display: flex;
 }
 
