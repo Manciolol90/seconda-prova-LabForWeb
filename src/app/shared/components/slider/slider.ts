@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
 import { MovieDbService } from '../../../services/movie-db.service';
+import { AuthService } from '../../../services/auth.service';
+import { MoviesService } from '../../../services/movies.service';
 
 @Component({
   selector: 'app-slider',
@@ -17,14 +19,34 @@ export class Slider implements OnInit {
 
   @ViewChild('slider', { static: false }) slider!: ElementRef<HTMLDivElement>;
 
-  constructor(private movieDbService: MovieDbService) {}
+  constructor(
+    private movieDbService: MovieDbService,
+    private moviesService: MoviesService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
-    this.movieDbService.getSavedMovies().subscribe((movies: any[]) => {
-      this.movies = movies;
-      console.log('Film caricati:', this.movies);
+    this.authService.isLoggedIn$.subscribe((isLoggedIn) => {
+      if (isLoggedIn) {
+        this.loadMoviesFromDb();
+      } else {
+        this.loadMoviesFromTmdb();
+      }
     });
-    this.startAutoScroll();
+  }
+
+  loadMoviesFromTmdb() {
+    this.moviesService.getPopularMovies().subscribe((movies) => {
+      this.movies = movies;
+      this.startAutoScroll();
+    });
+  }
+
+  loadMoviesFromDb() {
+    this.movieDbService.getSavedMovies().subscribe((movies) => {
+      this.movies = movies;
+      this.startAutoScroll();
+    });
   }
 
   scrollRight() {
