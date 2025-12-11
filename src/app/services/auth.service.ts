@@ -1,32 +1,47 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  // Stato login globale
   private loggedIn = new BehaviorSubject<boolean>(false);
+  private dbUrl = 'http://localhost:3000'; // JSON Server con json-server-auth
 
-  constructor() {}
+  constructor(private http: HttpClient) {
+    // Se c'è già un token → consideriamo l'utente loggato
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.loggedIn.next(true);
+    }
+  }
 
-  /** Observable pubblico per sapere se l'utente è loggato */
   get isLoggedIn$(): Observable<boolean> {
     return this.loggedIn.asObservable();
   }
 
-  /** Login manuale (simulato) */
-  login() {
-    this.loggedIn.next(true);
+  get isLoggedIn(): boolean {
+    return this.loggedIn.value;
   }
 
-  /** Logout */
+  /** Login reale con JSON Server Auth */
+  login(email: string, password: string): Observable<any> {
+    return this.http.post(`${this.dbUrl}/login`, { email, password }).pipe(
+      tap((res: any) => {
+        localStorage.setItem('token', res.accessToken); // salva JWT
+        this.loggedIn.next(true);
+      })
+    );
+  }
+
   logout() {
+    localStorage.removeItem('token');
     this.loggedIn.next(false);
   }
 
-  /** Ritorna lo stato attuale (true/false) */
-  get isLoggedIn(): boolean {
-    return this.loggedIn.value;
+  /** Registrazione */
+  register(email: string, password: string, nome: string): Observable<any> {
+    return this.http.post(`${this.dbUrl}/register`, { email, password, nome });
   }
 }
