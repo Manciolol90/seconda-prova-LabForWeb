@@ -341,13 +341,6 @@
       "tmdbId": 269149
     }
   ],
-  "users": [
-    {
-      "email": "pippo@gmail.com",
-      "password": "$2a$10$4tEzsPrhr7rdwRegZKvXhuFcYML0xzbPW/7Z6fmY.xbsVnk0kfOra",
-      "nome": "pippo rossi",
-      "id": 1
-    }
-  ],
+  "users": [],
   "purchases": []
 }
