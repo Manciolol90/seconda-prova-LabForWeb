@@ -3,6 +3,17 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { tap, catchError } from 'rxjs/operators';
 
+interface RegisterUser {
+  email: string;
+  password: string;
+  nome: string;
+}
+
+interface LoginResponse {
+  accessToken: string;
+  user: { email: string; nome: string; id: number };
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -11,7 +22,7 @@ export class AuthService {
   public isLoggedIn$: Observable<boolean> = this.loggedIn.asObservable();
 
   private token: string | null = null;
-  private apiUrl = 'http://localhost:3000'; // JSON server
+  private apiUrl = 'http://localhost:3000'; // server locale
 
   constructor(private http: HttpClient) {
     const token = localStorage.getItem('token');
@@ -21,12 +32,12 @@ export class AuthService {
     }
   }
 
-  /** login con email e password */
-  login(email: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`, { email, password }).pipe(
+  /** LOGIN con email e password */
+  login(email: string, password: string): Observable<LoginResponse | any> {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { email, password }).pipe(
       tap((res) => {
-        this.token = res?.accessToken ?? null;
-        if (this.token) {
+        if (res?.accessToken) {
+          this.token = res.accessToken;
           localStorage.setItem('token', this.token);
           this.loggedIn.next(true);
         } else {
@@ -40,19 +51,20 @@ export class AuthService {
     );
   }
 
-  /** logout */
+  /** REGISTRAZIONE nuovo utente */
+  register(user: RegisterUser): Observable<any> {
+    // json-server-auth gestisce automaticamente password hashata
+    return this.http.post(`${this.apiUrl}/register`, user);
+  }
+
+  /** LOGOUT */
   logout() {
     this.token = null;
     localStorage.removeItem('token');
     this.loggedIn.next(false);
   }
 
-  /** registra un nuovo utente */
-  register(user: { email: string; password: string; nome: string }) {
-    return this.http.post<any>(`${this.apiUrl}/register`, user);
-  }
-
-  /** ritorna token per usarlo in header */
+  /** RITORNA il token JWT per le chiamate protette */
   getToken(): string | null {
     return this.token;
   }
