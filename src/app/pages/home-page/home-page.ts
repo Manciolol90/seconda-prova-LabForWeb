@@ -12,7 +12,7 @@ import { Movie } from '../../models/movie.model';
   standalone: true,
   imports: [CommonModule, HeroBanner, Slider],
   templateUrl: './home-page.html',
-  styleUrl: './home-page.scss',
+  styleUrls: ['./home-page.scss'],
 })
 export class HomePage implements OnInit {
   movies: Movie[] = [];
@@ -25,26 +25,43 @@ export class HomePage implements OnInit {
   ) {}
 
   ngOnInit() {
-    // ogni volta che cambia lo stato del login → ricarico i film
+    // Ricarica i film ogni volta che cambia lo stato di login
     this.auth.isLoggedIn$.subscribe(() => {
       this.loadMovies();
     });
 
-    this.loadMovies(); // prima chiamata
+    this.loadMovies(); // caricamento iniziale
   }
 
   loadMovies() {
     this.loading = true;
 
-    this.localDb.getMergedMovies().subscribe({
-      next: (movies) => {
-        this.movies = movies;
-        this.loading = false;
-      },
-      error: () => {
-        console.error('Errore nel caricamento film');
-        this.loading = false;
-      },
-    });
+    const isLoggedIn = this.auth.getToken() !== null;
+
+    if (isLoggedIn) {
+      // quando l'utente è loggato → merge TMDB + DB e salvataggio
+      this.localDb.mergeAndSaveMovies().subscribe({
+        next: (movies) => {
+          this.movies = movies;
+          this.loading = false;
+        },
+        error: (err) => {
+          console.error('Errore nel merge dei film', err);
+          this.loading = false;
+        },
+      });
+    } else {
+      // utente non loggato → solo TMDB
+      this.tmdb.getPopularMovies().subscribe({
+        next: (movies) => {
+          this.movies = movies;
+          this.loading = false;
+        },
+        error: (err) => {
+          console.error('Errore nel caricamento film da TMDB', err);
+          this.loading = false;
+        },
+      });
+    }
   }
 }

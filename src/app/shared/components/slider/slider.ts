@@ -40,9 +40,9 @@ export class Slider implements OnInit, OnDestroy {
   }
 
   loadMoviesMerged() {
-    this.movieDbService.getMergedMovies().subscribe((movies) => {
+    this.movieDbService.mergeAndSaveMovies().subscribe((movies) => {
       this.movies = movies;
-      this.startAutoScroll(); // per Slider
+      this.startAutoScroll();
     });
   }
 

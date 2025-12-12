@@ -22,7 +22,8 @@ export class AuthService {
   public isLoggedIn$: Observable<boolean> = this.loggedIn.asObservable();
 
   private token: string | null = null;
-  private apiUrl = 'http://localhost:3000'; // server locale
+  private userId: number | null = null; // <- aggiunto
+  private apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {
     const token = localStorage.getItem('token');
@@ -39,6 +40,10 @@ export class AuthService {
         if (res?.accessToken) {
           this.token = res.accessToken;
           localStorage.setItem('token', this.token);
+
+          // <-- SALVA l'utente loggato
+          localStorage.setItem('user', JSON.stringify(res.user));
+
           this.loggedIn.next(true);
         } else {
           this.loggedIn.next(false);
@@ -60,12 +65,20 @@ export class AuthService {
   /** LOGOUT */
   logout() {
     this.token = null;
+    this.userId = null;
     localStorage.removeItem('token');
     this.loggedIn.next(false);
   }
 
   /** RITORNA il token JWT per le chiamate protette */
   getToken(): string | null {
+    console.log('TOKEN', this.token);
     return this.token;
+  }
+
+  /** Ritorna l’ID dell’utente loggato */
+  getUserId(): number | null {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user).id : null;
   }
 }

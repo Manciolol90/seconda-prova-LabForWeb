@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, forkJoin } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, forkJoin, of } from 'rxjs';
+import { map, mergeMap, catchError } from 'rxjs/operators';
 import { Movie } from '../models/movie.model';
 import { AuthService } from './auth.service';
 import { MoviesService } from './movies.service';
@@ -23,60 +23,60 @@ export class MovieDbService {
     return {
       headers: new HttpHeaders({
         Authorization: token ? `Bearer ${token}` : '',
+        'Content-Type': 'application/json',
       }),
     };
   }
 
-  saveMovie(movie: Movie): Observable<any> {
-    return this.http.post(
-      `${this.dbUrl}/movies`,
-      { ...movie, tmdbId: movie.id },
-      this.authHeaders()
-    );
+  /** Salva un film nel db.json */
+  private saveMovie(movie: Movie): Observable<any> {
+    const ownerId = this.authService.getUserId(); // ID utente loggato
+
+    return this.http
+      .post(
+        `${this.dbUrl}/640/movies`,
+        { ...movie, tmdbId: movie.id, ownerId }, // <-- aggiunto ownerId
+        this.authHeaders()
+      )
+      .pipe(
+        catchError((err) => {
+          console.error('Errore POST movie', movie.title, err);
+          return of(null); // evita che l’intero merge fallisca
+        })
+      );
   }
 
-  getSavedMovies(): Observable<Movie[]> {
-    return this.http.get<Movie[]>(`${this.dbUrl}/movies`, this.authHeaders());
-  }
-
-  findMovieByTmdbId(tmdbId: number): Observable<Movie[]> {
-    return this.http.get<Movie[]>(`${this.dbUrl}/movies?tmdbId=${tmdbId}`, this.authHeaders());
-  }
-
-  getMovieById(id: number): Observable<Movie> {
-    return this.http.get<Movie>(`${this.dbUrl}/movies/${id}`);
-  }
-
-  // -------------------------------------------------------------------------
-  // ✨ NUOVA FUNZIONE: MERGE TRA DB E TMDB SENZA DUPLICATI
-  // -------------------------------------------------------------------------
-  getMergedMovies(): Observable<Movie[]> {
-    const isLoggedIn = this.authService.getToken() !== null;
-
-    if (!isLoggedIn) {
-      // se non loggato → solo TMDB
-      console.log('non loggato');
-      return this.moviesService.getPopularMovies();
+  /** Merge e salvataggio dei film da TMDB al db.json */
+  mergeAndSaveMovies(): Observable<Movie[]> {
+    const token = this.authService.getToken();
+    if (!token) {
+      console.warn('Utente non loggato, nessun merge possibile');
+      return this.moviesService.getPopularMovies(); // fallback TMDB
     }
 
-    // se loggato → carica entrambe le sorgenti
     return forkJoin({
       tmdb: this.moviesService.getPopularMovies(),
       db: this.getSavedMovies(),
     }).pipe(
-      map(({ tmdb, db }) => {
-        console.log('loggato');
-        // normalizziamo i film del DB per avere sempre tmdbId
-        const normalizedDb = db.map((m) => ({
-          ...m,
-          tmdbId: m.tmdbId ?? m.id, // fallback se manca tmdbId
-        }));
+      mergeMap(({ tmdb, db }) => {
+        const existingIds = new Set(db.map((m) => m.tmdbId ?? m.id));
+        const newMovies = tmdb.filter((m) => !existingIds.has(m.id));
 
-        const existingIds = new Set(normalizedDb.map((m) => m.tmdbId));
+        if (newMovies.length === 0) return of(db);
 
-        const filteredTmdb = tmdb.filter((m) => !existingIds.has(m.id));
+        // salva film nuovi uno per uno e aspetta che tutti siano completati
+        const saves$ = newMovies.map((m) => this.saveMovie(m));
+        return forkJoin(saves$).pipe(map(() => [...db, ...newMovies]));
+      })
+    );
+  }
 
-        return [...normalizedDb, ...filteredTmdb];
+  /** Recupera i film già salvati nel db.json */
+  getSavedMovies(): Observable<Movie[]> {
+    return this.http.get<Movie[]>(`${this.dbUrl}/640/movies`, this.authHeaders()).pipe(
+      catchError((err) => {
+        console.error('Errore GET db.json', err);
+        return of([]);
       })
     );
   }

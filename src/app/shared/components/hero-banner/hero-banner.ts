@@ -40,9 +40,9 @@ export class HeroBanner implements OnInit, OnDestroy {
   }
 
   private loadMoviesMerged() {
-    this.movieDbService.getMergedMovies().subscribe((movies) => {
+    this.movieDbService.mergeAndSaveMovies().subscribe((movies) => {
       this.films = movies;
-      this.startRotation(); // per Hero
+      this.startRotation();
     });
   }
 
