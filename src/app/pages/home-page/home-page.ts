@@ -36,11 +36,7 @@ export class HomePage implements OnInit {
   loadMovies() {
     this.loading = true;
 
-    const useLocal = this.auth.getToken() !== null;
-
-    const source = useLocal ? this.localDb.getSavedMovies() : this.tmdb.getPopularMovies();
-
-    source.subscribe({
+    this.localDb.getMergedMovies().subscribe({
       next: (movies) => {
         this.movies = movies;
         this.loading = false;

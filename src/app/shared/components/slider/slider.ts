@@ -30,15 +30,8 @@ export class Slider implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // Carica subito film da TMDB
-    this.loadMoviesFromTmdb();
-
-    // Aggiorna film dopo login
-    this.authSub = this.authService.isLoggedIn$.subscribe((isLoggedIn: any) => {
-      if (isLoggedIn) {
-        this.loadMoviesFromDb();
-      }
-    });
+    this.loadMoviesMerged();
+    this.authService.isLoggedIn$.subscribe(() => this.loadMoviesMerged());
   }
 
   ngOnDestroy() {
@@ -46,17 +39,10 @@ export class Slider implements OnInit, OnDestroy {
     this.authSub?.unsubscribe();
   }
 
-  loadMoviesFromTmdb() {
-    this.moviesService.getPopularMovies().subscribe((movies) => {
+  loadMoviesMerged() {
+    this.movieDbService.getMergedMovies().subscribe((movies) => {
       this.movies = movies;
-      this.startAutoScroll();
-    });
-  }
-
-  loadMoviesFromDb() {
-    this.movieDbService.getSavedMovies().subscribe((movies) => {
-      this.movies = movies;
-      this.startAutoScroll();
+      this.startAutoScroll(); // per Slider
     });
   }
 

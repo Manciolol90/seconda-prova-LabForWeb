@@ -30,15 +30,8 @@ export class HeroBanner implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // Caricamento iniziale da TMDB
-    this.loadMoviesFromTmdb();
-
-    // Poi, se loggato, sovrascrivi con DB
-    this.authService.isLoggedIn$.subscribe((isLoggedIn: any) => {
-      if (isLoggedIn) {
-        this.loadMoviesFromDb();
-      }
-    });
+    this.loadMoviesMerged();
+    this.authService.isLoggedIn$.subscribe(() => this.loadMoviesMerged());
   }
 
   ngOnDestroy(): void {
@@ -46,17 +39,10 @@ export class HeroBanner implements OnInit, OnDestroy {
     this.authSub?.unsubscribe();
   }
 
-  private loadMoviesFromTmdb() {
-    this.moviesService.getPopularMovies().subscribe((movies) => {
+  private loadMoviesMerged() {
+    this.movieDbService.getMergedMovies().subscribe((movies) => {
       this.films = movies;
-      this.startRotation();
-    });
-  }
-
-  private loadMoviesFromDb() {
-    this.movieDbService.getSavedMovies().subscribe((movies) => {
-      this.films = movies;
-      this.startRotation();
+      this.startRotation(); // per Hero
     });
   }
 

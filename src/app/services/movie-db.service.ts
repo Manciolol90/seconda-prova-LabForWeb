@@ -55,6 +55,7 @@ export class MovieDbService {
 
     if (!isLoggedIn) {
       // se non loggato → solo TMDB
+      console.log('non loggato');
       return this.moviesService.getPopularMovies();
     }
 
@@ -64,6 +65,7 @@ export class MovieDbService {
       db: this.getSavedMovies(),
     }).pipe(
       map(({ tmdb, db }) => {
+        console.log('loggato');
         // normalizziamo i film del DB per avere sempre tmdbId
         const normalizedDb = db.map((m) => ({
           ...m,
