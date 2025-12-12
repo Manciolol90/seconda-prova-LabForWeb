@@ -341,6 +341,13 @@
       "tmdbId": 269149
     }
   ],
-  "users": [],
+  "users": [
+    {
+      "email": "tommaso.banana@qualcosa.it",
+      "password": "$2a$10$JjPvH5a2B7a2Ib/uyfH1JOtnNmZWuors3LwgEMFitDBcPqRZKfIx2",
+      "nome": "Tommy",
+      "id": 1
+    }
+  ],
   "purchases": []
 }

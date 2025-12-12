@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Movie } from '../models/movie.model';
 import { AuthService } from './auth.service';
+import { MoviesService } from './movies.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +12,11 @@ import { AuthService } from './auth.service';
 export class MovieDbService {
   private dbUrl = 'http://localhost:3000';
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private moviesService: MoviesService
+  ) {}
 
   private authHeaders(): { headers: HttpHeaders } {
     const token = this.authService.getToken();
@@ -20,6 +26,7 @@ export class MovieDbService {
       }),
     };
   }
+
   saveMovie(movie: Movie): Observable<any> {
     return this.http.post(
       `${this.dbUrl}/movies`,
@@ -36,10 +43,39 @@ export class MovieDbService {
     return this.http.get<Movie[]>(`${this.dbUrl}/movies?tmdbId=${tmdbId}`, this.authHeaders());
   }
 
-  /** Controlla se un film è già salvato (per non duplicare) */
   getMovieById(id: number): Observable<Movie> {
     return this.http.get<Movie>(`${this.dbUrl}/movies/${id}`);
   }
 
-  /** Cerca film tramite id TMDB */
+  // -------------------------------------------------------------------------
+  // ✨ NUOVA FUNZIONE: MERGE TRA DB E TMDB SENZA DUPLICATI
+  // -------------------------------------------------------------------------
+  getMergedMovies(): Observable<Movie[]> {
+    const isLoggedIn = this.authService.getToken() !== null;
+
+    if (!isLoggedIn) {
+      // se non loggato → solo TMDB
+      return this.moviesService.getPopularMovies();
+    }
+
+    // se loggato → carica entrambe le sorgenti
+    return forkJoin({
+      tmdb: this.moviesService.getPopularMovies(),
+      db: this.getSavedMovies(),
+    }).pipe(
+      map(({ tmdb, db }) => {
+        // normalizziamo i film del DB per avere sempre tmdbId
+        const normalizedDb = db.map((m) => ({
+          ...m,
+          tmdbId: m.tmdbId ?? m.id, // fallback se manca tmdbId
+        }));
+
+        const existingIds = new Set(normalizedDb.map((m) => m.tmdbId));
+
+        const filteredTmdb = tmdb.filter((m) => !existingIds.has(m.id));
+
+        return [...normalizedDb, ...filteredTmdb];
+      })
+    );
+  }
 }
