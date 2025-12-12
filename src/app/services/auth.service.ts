@@ -37,8 +37,11 @@ export class AuthService {
   login(email: string, password: string): Observable<LoginResponse | any> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { email, password }).pipe(
       tap((res) => {
+        console.log("prima dell'if", res);
         if (res?.accessToken) {
+          console.log('Login avvenuto con successo:', res);
           this.token = res.accessToken;
+          console.log('TOKEN SALVATO:', this.token);
           localStorage.setItem('token', this.token);
 
           // <-- SALVA l'utente loggato
@@ -72,7 +75,7 @@ export class AuthService {
 
   /** RITORNA il token JWT per le chiamate protette */
   getToken(): string | null {
-    console.log('TOKEN', this.token);
+    console.log('questa è get token TOKEN', this.token);
     return this.token;
   }
 
