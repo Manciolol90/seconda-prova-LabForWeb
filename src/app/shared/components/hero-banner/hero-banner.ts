@@ -1,10 +1,6 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MovieDbService } from '../../../services/movie-db.service';
-import { MoviesService } from '../../../services/movies.service';
-import { AuthService } from '../../../services/auth.service';
 import { Movie } from '../../../models/movie.model';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-hero-banner',
@@ -13,52 +9,41 @@ import { Subscription } from 'rxjs';
   templateUrl: './hero-banner.html',
   styleUrls: ['./hero-banner.scss'],
 })
-export class HeroBanner implements OnInit, OnDestroy {
+export class HeroBanner implements OnChanges, OnDestroy {
   @Input() movies: Movie[] = [];
 
-  films: Movie[] = [];
   currentFilmIndex = 0;
   currentFilm: Movie | null = null;
-  isFading: boolean = false;
-  private authSub!: Subscription;
+  isFading = false;
   private rotationInterval: any;
 
-  constructor(
-    private movieDbService: MovieDbService,
-    private moviesService: MoviesService,
-    private authService: AuthService
-  ) {}
-
-  ngOnInit(): void {
-    this.loadMoviesMerged();
-    this.authService.isLoggedIn$.subscribe(() => this.loadMoviesMerged());
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['movies']) {
+      this.startRotation();
+    }
   }
 
   ngOnDestroy(): void {
     clearInterval(this.rotationInterval);
-    this.authSub?.unsubscribe();
-  }
-
-  private loadMoviesMerged() {
-    this.movieDbService.mergeAndSaveMovies().subscribe((movies) => {
-      this.films = movies;
-      this.startRotation();
-    });
   }
 
   private startRotation() {
-    if (!this.films || this.films.length === 0) return;
+    clearInterval(this.rotationInterval);
+
+    if (!this.movies || this.movies.length === 0) {
+      this.currentFilm = null;
+      return;
+    }
 
     this.currentFilmIndex = 0;
-    this.currentFilm = this.films[0];
-    clearInterval(this.rotationInterval);
+    this.currentFilm = this.movies[0];
 
     this.rotationInterval = setInterval(() => {
       this.isFading = true;
 
       setTimeout(() => {
-        this.currentFilmIndex = (this.currentFilmIndex + 1) % this.films.length;
-        this.currentFilm = this.films[this.currentFilmIndex];
+        this.currentFilmIndex = (this.currentFilmIndex + 1) % this.movies.length;
+        this.currentFilm = this.movies[this.currentFilmIndex];
         this.isFading = false;
       }, 500);
     }, 5000);
