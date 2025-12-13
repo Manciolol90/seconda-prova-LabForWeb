@@ -70,6 +70,7 @@ export class AuthService {
     this.token = null;
     this.userId = null;
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     this.loggedIn.next(false);
   }
 

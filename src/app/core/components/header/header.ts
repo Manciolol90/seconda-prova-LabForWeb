@@ -8,6 +8,7 @@ import { LoginDialog } from '../../../shared/components/login-dialog/login-dialo
 import { RegisterDialog } from '../../../shared/components/register-dialog/register-dialog';
 import { AuthService } from '../../../services/auth.service';
 import { Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
@@ -18,6 +19,7 @@ import { Subscription } from 'rxjs';
     MatInputModule,
     MatButtonModule,
     MatCheckboxModule,
+    CommonModule,
   ],
   templateUrl: './header.html',
   styleUrls: ['./header.scss'],
@@ -34,11 +36,6 @@ export class Header implements OnDestroy {
   }
 
   accediOnClick() {
-    if (this.isLoggedIn) {
-      this.authService.logout();
-      return;
-    }
-
     const dialogRef = this.dialog.open(LoginDialog, {
       width: '400px',
       maxWidth: '90vw',
@@ -48,14 +45,13 @@ export class Header implements OnDestroy {
       if (result === 'register') {
         this.openRegisterDialog();
       } else if (result?.email && result?.password) {
-        this.authService.login(result.email, result.password).subscribe({
-          next: (res) => {
-            console.log('Login effettuato con successo', res);
-          },
-          error: (err) => console.error('Login fallito', err),
-        });
+        this.authService.login(result.email, result.password).subscribe();
       }
     });
+  }
+
+  logoutOnClick() {
+    this.authService.logout();
   }
 
   openRegisterDialog() {

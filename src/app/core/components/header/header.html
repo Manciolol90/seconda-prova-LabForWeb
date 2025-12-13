@@ -1,10 +1,16 @@
-<!-- nell'header sistemiamo il logo e la navbar in alto a sinistra della pagina, il bottone accedi in alto a destra-->
 <header>
   <div class="header-left">
-    <img src="c:\Users\manci\Desktop\seconda-prova-LabForWeb\src\assets\1.png" id="logo" />
+    <img src="assets/1.png" id="logo" />
     <button matFab extended>Home</button>
   </div>
+
   <div class="header-right">
-    <button matFab extended (click)="accediOnClick()">Accedi</button>
+    <!-- NON loggato -->
+    <button matFab extended *ngIf="!isLoggedIn" (click)="accediOnClick()">Accedi</button>
+
+    <!-- Loggato -->
+    <button matFab extended color="warn" *ngIf="isLoggedIn" (click)="logoutOnClick()">
+      Logout
+    </button>
   </div>
 </header>
