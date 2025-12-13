@@ -19,31 +19,21 @@ export class Slider implements OnInit, OnDestroy {
   @Input() movies: Movie[] = [];
 
   autoScrollInterval: any;
-  authSub!: Subscription;
 
   @ViewChild('slider', { static: false }) slider!: ElementRef<HTMLDivElement>;
 
-  constructor(
-    private movieDbService: MovieDbService,
-    private moviesService: MoviesService,
-    private authService: AuthService
-  ) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.loadMoviesMerged();
-    this.authService.isLoggedIn$.subscribe(() => this.loadMoviesMerged());
+    this.startAutoScroll();
   }
 
   ngOnDestroy() {
     clearInterval(this.autoScrollInterval);
-    this.authSub?.unsubscribe();
   }
 
-  loadMoviesMerged() {
-    this.movieDbService.mergeAndSaveMovies().subscribe((movies) => {
-      this.movies = movies;
-      this.startAutoScroll();
-    });
+  ngOnChanges() {
+    this.startAutoScroll();
   }
 
   scrollRight() {

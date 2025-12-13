@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeroBanner } from '../../shared/components/hero-banner/hero-banner';
 import { Slider } from '../../shared/components/slider/slider';
@@ -15,7 +15,8 @@ import { Movie } from '../../models/movie.model';
   styleUrls: ['./home-page.scss'],
 })
 export class HomePage implements OnInit {
-  movies: Movie[] = [];
+  @Input() movies: Movie[] = [];
+  @Input() moviesFiltrati: Movie[] = [];
   loading = true;
 
   constructor(
@@ -43,6 +44,7 @@ export class HomePage implements OnInit {
       this.localDb.mergeAndSaveMovies().subscribe({
         next: (movies) => {
           this.movies = movies;
+          this.moviesFiltrati = movies;
           this.loading = false;
         },
         error: (err) => {
@@ -55,6 +57,7 @@ export class HomePage implements OnInit {
       this.tmdb.getPopularMovies().subscribe({
         next: (movies) => {
           this.movies = movies;
+          this.moviesFiltrati = movies;
           this.loading = false;
         },
         error: (err) => {
@@ -63,5 +66,16 @@ export class HomePage implements OnInit {
         },
       });
     }
+  }
+
+  filtra(termine: string) {
+    if (!termine) {
+      this.moviesFiltrati = this.movies;
+      return;
+    }
+
+    this.moviesFiltrati = this.movies.filter(
+      (m) => m.title.toLowerCase().includes(termine) || m.overview.toLowerCase().includes(termine)
+    );
   }
 }

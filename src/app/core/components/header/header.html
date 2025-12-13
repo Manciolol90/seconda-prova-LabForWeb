@@ -1,16 +1,23 @@
 <header>
   <div class="header-left">
     <img src="assets/1.png" id="logo" />
-    <button matFab extended>Home</button>
+    <button mat-fab>Home</button>
   </div>
 
   <div class="header-right">
-    <!-- NON loggato -->
-    <button matFab extended *ngIf="!isLoggedIn" (click)="accediOnClick()">Accedi</button>
-
-    <!-- Loggato -->
-    <button matFab extended color="warn" *ngIf="isLoggedIn" (click)="logoutOnClick()">
-      Logout
+    <button mat-fab (click)="openSearchCard()">🔍</button>
+    <button mat-fab (click)="accediOnClick()">
+      {{ isLoggedIn ? 'Logout' : 'Accedi' }}
     </button>
   </div>
 </header>
+
+<!-- CARD CENTRALE PER SEARCH -->
+<div class="search-card" *ngIf="searchCardOpen">
+  <mat-form-field appearance="outline">
+    <mat-label>Inserisci titolo film</mat-label>
+    <input matInput [(ngModel)]="termine" (input)="onKeyPress()" />
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="resetRicerca()">Reset ricerca</button>
+  <button mat-button (click)="closeSearchCard()">Chiudi</button>
+</div>

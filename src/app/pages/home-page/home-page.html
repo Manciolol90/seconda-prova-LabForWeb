@@ -1,6 +1,6 @@
 <ng-container *ngIf="!loading && movies.length > 0">
   <app-hero-banner [movies]="movies"></app-hero-banner>
-  <app-slider [movies]="movies"></app-slider>
+  <app-slider [movies]="moviesFiltrati"></app-slider>
 </ng-container>
 
 <div *ngIf="loading">Caricamento...</div>

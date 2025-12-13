@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,6 +9,7 @@ import { RegisterDialog } from '../../../shared/components/register-dialog/regis
 import { AuthService } from '../../../services/auth.service';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
@@ -20,6 +21,7 @@ import { CommonModule } from '@angular/common';
     MatButtonModule,
     MatCheckboxModule,
     CommonModule,
+    FormsModule,
   ],
   templateUrl: './header.html',
   styleUrls: ['./header.scss'],
@@ -27,6 +29,19 @@ import { CommonModule } from '@angular/common';
 export class Header implements OnDestroy {
   isLoggedIn = false;
   private authSub?: Subscription;
+  termine: string = '';
+  searchCardOpen = false;
+
+  @Output() cerca = new EventEmitter<string>();
+
+  onKeyPress() {
+    this.cerca.emit(this.termine.toLowerCase());
+  }
+
+  resetRicerca() {
+    this.termine = '';
+    this.cerca.emit('');
+  }
 
   constructor(private dialog: MatDialog, private authService: AuthService) {
     // sottoscrizione allo stato di login — protetta da undefined grazie alla correzione dell'AuthService
@@ -62,6 +77,16 @@ export class Header implements OnDestroy {
         console.log('Registrazione avvenuta', result.registeredUser);
       }
     });
+  }
+
+  closeSearchCard() {
+    this.searchCardOpen = false;
+    this.termine = '';
+    this.cerca.emit('');
+  }
+
+  openSearchCard() {
+    this.searchCardOpen = true;
   }
 
   ngOnDestroy(): void {
