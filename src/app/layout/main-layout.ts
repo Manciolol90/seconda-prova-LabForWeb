@@ -6,6 +6,7 @@ import { CartService } from '../services/cart.service';
 import { FormsModule } from '@angular/forms';
 import { ViewChild } from '@angular/core';
 import { HomePage } from '../pages/home-page/home-page';
+import { Library } from '../pages/library/library';
 
 @Component({
   selector: 'app-main-layout',
@@ -17,14 +18,14 @@ import { HomePage } from '../pages/home-page/home-page';
 export class MainLayout {
   filtro: string = '';
 
-  constructor(private cartService: CartService) {}
+  constructor() {}
 
   @ViewChild(RouterOutlet) outlet!: RouterOutlet;
 
   aggiornaFiltro(termine: string) {
     const component = this.outlet.component;
 
-    if (component instanceof HomePage) {
+    if (component instanceof HomePage || component instanceof Library) {
       component.filtra(termine);
     }
   }
