@@ -1,0 +1,18 @@
+<h2>Ricerca film</h2>
+
+<form #searchForm="ngForm" class="search-form">
+  <mat-form-field appearance="fill">
+    <mat-label>Inserisci titolo film</mat-label>
+    <input
+      matInput
+      name="termine"
+      [(ngModel)]="termine"
+      (input)="onInput()"
+      placeholder="Digita per filtrare..."
+    />
+  </mat-form-field>
+
+  <div class="actions">
+    <button mat-button type="button" (click)="chiudi()">Chiudi</button>
+  </div>
+</form>

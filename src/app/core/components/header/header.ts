@@ -10,6 +10,8 @@ import { AuthService } from '../../../services/auth.service';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SearchDialog } from '../../../shared/components/search-dialog/search-dialog';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -22,6 +24,7 @@ import { FormsModule } from '@angular/forms';
     MatCheckboxModule,
     CommonModule,
     FormsModule,
+    RouterModule,
   ],
   templateUrl: './header.html',
   styleUrls: ['./header.scss'],
@@ -31,6 +34,7 @@ export class Header implements OnDestroy {
   private authSub?: Subscription;
   termine: string = '';
   searchCardOpen = false;
+  userName: string | null = null;
 
   @Output() cerca = new EventEmitter<string>();
 
@@ -56,17 +60,21 @@ export class Header implements OnDestroy {
       maxWidth: '90vw',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === 'register') {
+    dialogRef.afterClosed().subscribe((user) => {
+      if (user === 'register') {
         this.openRegisterDialog();
-      } else if (result?.email && result?.password) {
-        this.authService.login(result.email, result.password).subscribe();
+      } else if (user?.email) {
+        this.userName = user.nome;
+        this.isLoggedIn = true;
+        console.log('Login riuscito, utente:', user);
       }
     });
   }
 
   logoutOnClick() {
     this.authService.logout();
+    this.userName = null;
+    this.isLoggedIn = false;
   }
 
   openRegisterDialog() {
@@ -86,7 +94,23 @@ export class Header implements OnDestroy {
   }
 
   openSearchCard() {
-    this.searchCardOpen = true;
+    const dialogRef = this.dialog.open(SearchDialog, {
+      width: '400px',
+    });
+
+    const instance = dialogRef.componentInstance;
+    instance.termineChange.subscribe((termine: string) => {
+      this.termine = termine;
+      this.cerca.emit(termine);
+    });
+  }
+
+  topleft() {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
   }
 
   ngOnDestroy(): void {

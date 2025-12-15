@@ -10,7 +10,7 @@
   animation: slideFadeIn 0.35s ease forwards;
 }
 
-.login-form {
+.search-form {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -22,6 +22,12 @@
   button {
     width: 100%;
   }
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
 }
 
 // Animazione per entrata
