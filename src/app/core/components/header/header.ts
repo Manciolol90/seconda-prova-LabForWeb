@@ -174,13 +174,32 @@ export class Header implements OnDestroy, OnInit {
         });
 
         dialogRef.afterClosed().subscribe((result) => {
-          // 💳 ACQUISTO (UNICO CASO IN CUI CHIUDIAMO)
           if (result === 'purchase') {
             this.cartService.purchaseCart(userId).subscribe(() => {
               this.cartMovies = [];
+              this.updateFlags();
             });
           }
         });
+      });
+    });
+  }
+
+  updateFlags() {
+    const userId = this.authService.getUserId();
+    if (!userId) return;
+
+    // recupera il carrello
+    this.cartService.getCart(userId).subscribe((cart) => {
+      if (!cart || cart.movieIds.length === 0) {
+        this.cartMovies = [];
+        return;
+      }
+
+      // recupera film completi
+      this.movieDbService.getSavedMovies().subscribe((movies) => {
+        this.cartMovies = movies.filter((m) => cart.movieIds.includes(m.tmdbId ?? m.id));
+        console.log('CART MOVIES AGGIORNATI:', this.cartMovies);
       });
     });
   }

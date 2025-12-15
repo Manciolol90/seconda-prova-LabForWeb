@@ -6,6 +6,7 @@
       'url(https://image.tmdb.org/t/p/original' + movieDetails.backdrop_path + ')'
     "
   >
+    <span *ngIf="alreadyPurchased" class="play-overlay" (click)="playMovie()">▶</span>
     <div class="overlay">
       <h1>{{ movieDetails.title }}</h1>
       <span class="rating">⭐ {{ movieDetails.vote_average }}</span>
@@ -19,6 +20,7 @@
         color="primary"
         *ngIf="isLoggedIn && !alreadyPurchased && !alreadyInCart"
         (click)="addToCart()"
+        class="add-to-cart-btn"
       >
         Aggiungi al carrello
       </button>

@@ -33,8 +33,11 @@ export class MovieDetail implements OnInit {
 
     this.authService.isLoggedIn$.subscribe((status) => {
       this.isLoggedIn = status;
-      if (status) {
-        this.checkCartAndPurchase();
+      if (!status) {
+        this.alreadyPurchased = false;
+        this.alreadyInCart = false;
+      } else {
+        this.updateFlags(); // aggiorna i flag in base al DB
       }
     });
   }
@@ -66,7 +69,32 @@ export class MovieDetail implements OnInit {
     if (!userId) return;
 
     this.cartService.addMovieToCart(userId, this.movieId).subscribe(() => {
-      this.alreadyInCart = true;
+      this.updateFlags(); // ✅ aggiorna subito il pulsante e il tasto play
     });
+  }
+  updateFlags() {
+    const userId = this.authService.getUserId();
+    if (!userId) return;
+
+    this.cartService.getCart(userId).subscribe((cart) => {
+      this.alreadyInCart = cart?.movieIds.includes(this.movieId) ?? false;
+    });
+
+    this.cartService.getPurchasedMovies(userId).subscribe((purchasedIds) => {
+      this.alreadyPurchased = purchasedIds.includes(this.movieId);
+    });
+  }
+
+  purchaseMovie() {
+    const userId = this.authService.getUserId();
+    if (!userId) return;
+
+    this.cartService.purchaseCart(userId).subscribe(() => {
+      this.alreadyPurchased = true;
+      this.alreadyInCart = false;
+    });
+  }
+  playMovie() {
+    console.log('Film acquistato:', this.movieDetails);
   }
 }
