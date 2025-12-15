@@ -21,19 +21,26 @@
     gap: 12px;
 
     img {
-      width: 50px;
-      height: 75px;
+      width: 70px;
+      height: 105px;
       object-fit: cover;
       border-radius: 4px;
     }
 
     span {
-      flex: 1;
+      flex: 3;
       font-weight: 500;
     }
   }
 
   button {
+    font-size: 0.7rem; // molto più piccolo
+    padding: 2px 6px;
+    height: auto;
+    width: auto;
+    min-width: 0;
+  }
+  button:not(.cart-item button) {
     width: 100%;
   }
 }

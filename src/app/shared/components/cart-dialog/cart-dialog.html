@@ -1,28 +1,19 @@
 <h2>Carrello</h2>
 
-<div *ngIf="data.movies.length > 0; else emptyCart" class="cart-list">
-  <div *ngFor="let movie of data.movies" class="cart-item">
+<div *ngIf="movies.length > 0; else emptyCart" class="cart-list">
+  <div *ngFor="let movie of movies" class="cart-item">
     <img [src]="'https://image.tmdb.org/t/p/w92' + movie.poster_path" [alt]="movie.title" />
-
-    <div class="cart-info">
-      <strong>{{ movie.title }}</strong>
-      <button mat-icon-button color="warn" (click)="removeMovie(movie.id)">❌</button>
-    </div>
+    <span>{{ movie.title }}</span>
+    <button mat-icon-button (click)="removeMovie(movie.id)">✖</button>
   </div>
 
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="onPurchase()"
-    [disabled]="data.movies.length === 0"
-  >
+  <button mat-raised-button color="primary" (click)="onPurchase()" [disabled]="movies.length === 0">
     Acquista
   </button>
-
-  <button mat-button mat-dialog-close>Chiudi</button>
+  <button mat-button color="warn" mat-dialog-close (click)="closeDialog()">Chiudi</button>
 </div>
 
 <ng-template #emptyCart>
   <p>Il tuo carrello è vuoto.</p>
-  <button mat-button mat-dialog-close>Chiudi</button>
+  <button mat-button mat-dialog-close (click)="closeDialog()">Chiudi</button>
 </ng-template>

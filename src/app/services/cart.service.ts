@@ -105,7 +105,7 @@ export class CartService {
     };
   }
 
-  removeMovieFromCart(userId: number, movieId: number) {
+  removeMovieFromCart(userId: number, movieId: number): Observable<Cart> {
     return this.getCart(userId).pipe(
       map((cart) => {
         cart.movieIds = cart.movieIds.filter((id) => id !== movieId);
@@ -113,9 +113,9 @@ export class CartService {
       }),
       tap((cart) => {
         if (cart.id !== 0) {
-          this.http.put(`${this.apiUrl}/carts/${cart.id}`, cart).subscribe();
+          this.http.put<Cart>(`${this.apiUrl}/carts/${cart.id}`, cart).subscribe();
         }
-        this.cart$.next(cart);
+        this.cart$.next(cart); // <- aggiorna il BehaviorSubject
       })
     );
   }
