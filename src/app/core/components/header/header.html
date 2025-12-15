@@ -6,6 +6,7 @@
 
   <div class="header-right">
     <button mat-fab (click)="openSearchCard()">🔍</button>
+    <button mat-fab (click)="openCart()">🛒</button>
     <button *ngIf="!isLoggedIn" mat-fab (click)="accediOnClick()">Accedi</button>
     <button *ngIf="isLoggedIn" mat-fab (click)="logoutOnClick()">{{ userName }}</button>
   </div>

@@ -1,21 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { map, tap, catchError } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
+import { Movie } from '../models/movie.model';
 
 interface Cart {
   id: number;
   userId: number;
   movieIds: number[];
-}
-
-interface User {
-  id: number;
-  email: string;
-  nome: string;
-  password: string;
-  cart?: number[]; // opzionale, per comodità
-  purchased?: number[]; // opzionale
 }
 
 @Injectable({
@@ -27,22 +19,15 @@ export class CartService {
 
   constructor(private http: HttpClient) {}
 
-  /** Ottieni il carrello di un utente */
+  /** Recupera il carrello dell'utente */
   getCart(userId: number): Observable<Cart> {
     return this.http.get<Cart[]>(`${this.apiUrl}/carts?userId=${userId}`).pipe(
-      map((carts) => carts[0] || { id: 0, userId, movieIds: [] }),
+      map((carts) => (carts.length > 0 ? carts[0] : { id: 0, userId, movieIds: [] })),
       tap((cart) => this.cart$.next(cart))
     );
   }
 
-  /** Ottieni i film già acquistati dall’utente */
-  getPurchasedMovies(userId: number): Observable<number[]> {
-    return this.http
-      .get<User[]>(`${this.apiUrl}/users?id=${userId}`)
-      .pipe(map((users) => users[0]?.purchased || []));
-  }
-
-  /** Aggiungi un film al carrello */
+  /** Aggiunge un film al carrello (se non acquistato e non presente) */
   addMovieToCart(userId: number, movieId: number): Observable<Cart> {
     return this.getCart(userId).pipe(
       map((cart) => {
@@ -52,13 +37,11 @@ export class CartService {
         return cart;
       }),
       tap((cart) => {
-        // aggiorna il DB
         if (cart.id === 0) {
-          // carrello inesistente, crealo
-          this.http
-            .post<Cart>(`${this.apiUrl}/carts`, { userId, movieIds: cart.movieIds })
-            .subscribe();
+          // Carrello nuovo
+          this.http.post<Cart>(`${this.apiUrl}/carts`, cart).subscribe();
         } else {
+          // Aggiorna carrello esistente
           this.http.put<Cart>(`${this.apiUrl}/carts/${cart.id}`, cart).subscribe();
         }
         this.cart$.next(cart);
@@ -66,35 +49,59 @@ export class CartService {
     );
   }
 
-  /** Checkout: sposta i film dal carrello agli acquisti dell’utente */
-  checkout(userId: number): Observable<void> {
+  /** Recupera film acquistati dall’utente */
+  getPurchasedMovies(userId: number): Observable<number[]> {
+    return this.http
+      .get<{ movieIds: number[] }[]>(`${this.apiUrl}/orders?userId=${userId}`)
+      .pipe(map((orders) => orders.flatMap((o) => o.movieIds)));
+  }
+
+  /** Acquista tutti i film nel carrello e svuota il carrello */
+  purchaseCart(userId: number): Observable<any> {
     return this.getCart(userId).pipe(
-      map((cart) => cart.movieIds),
-      tap((movieIds) => {
-        this.http.get<User[]>(`${this.apiUrl}/users?id=${userId}`).subscribe((users) => {
-          const user = users[0];
-          user.purchased = user.purchased || [];
-          user.purchased.push(...movieIds.filter((id) => !(user.purchased || []).includes(id)));
+      map((cart) => {
+        if (!cart || cart.movieIds.length === 0) return null;
 
-          // salva sul DB
-          this.http.put(`${this.apiUrl}/users/${userId}`, user).subscribe();
+        // Crea nuovo ordine
+        const order = {
+          userId,
+          movieIds: [...cart.movieIds],
+          date: new Date().toISOString(),
+        };
 
-          // svuota il carrello
-          this.http.get<Cart[]>(`${this.apiUrl}/carts?userId=${userId}`).subscribe((carts) => {
-            if (carts[0]) {
-              carts[0].movieIds = [];
-              this.http.put(`${this.apiUrl}/carts/${carts[0].id}`, carts[0]).subscribe();
-              this.cart$.next(carts[0]);
-            }
-          });
-        });
-      }),
-      map(() => {})
+        // Salva ordine
+        this.http.post(`${this.apiUrl}/orders`, order).subscribe();
+
+        // Svuota carrello
+        cart.movieIds = [];
+        if (cart.id !== 0) {
+          this.http.put(`${this.apiUrl}/carts/${cart.id}`, cart).subscribe();
+        }
+
+        this.cart$.next(cart);
+        return order;
+      })
     );
   }
 
-  /** Observable per sottoscriversi al carrello corrente */
-  cartObservable(): Observable<Cart | null> {
+  /** Recupera il comportamento reattivo del carrello */
+  getCartObservable(): Observable<Cart | null> {
     return this.cart$.asObservable();
+  }
+
+  /** Metodo di supporto per ottenere dettagli di un film dal MoviesService */
+  getMovieById(movieId: number): Movie {
+    // Assumiamo che MoviesService sia iniettato o importato in un componente
+    // e fornisca un metodo per ottenere il dettaglio del film
+    // Qui serve solo un placeholder:
+    return {
+      id: movieId,
+      title: 'Film ' + movieId,
+      overview: '',
+      poster_path: '',
+      backdrop_path: '',
+      release_date: '',
+      vote_average: 0,
+    };
   }
 }

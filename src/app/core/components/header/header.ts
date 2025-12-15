@@ -1,4 +1,4 @@
-import { Component, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { Component, OnDestroy, EventEmitter, Output, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,6 +12,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SearchDialog } from '../../../shared/components/search-dialog/search-dialog';
 import { RouterModule } from '@angular/router';
+import { CartDialog } from '../../../shared/components/cart-dialog/cart-dialog';
+import { CartService } from '../../../services/cart.service';
+import { Movie } from '../../../models/movie.model';
 
 @Component({
   selector: 'app-header',
@@ -29,12 +32,13 @@ import { RouterModule } from '@angular/router';
   templateUrl: './header.html',
   styleUrls: ['./header.scss'],
 })
-export class Header implements OnDestroy {
+export class Header implements OnDestroy, OnInit {
   isLoggedIn = false;
   private authSub?: Subscription;
   termine: string = '';
   searchCardOpen = false;
   userName: string | null = null;
+  cartMovies: Movie[] = [];
 
   @Output() cerca = new EventEmitter<string>();
 
@@ -47,10 +51,31 @@ export class Header implements OnDestroy {
     this.cerca.emit('');
   }
 
-  constructor(private dialog: MatDialog, private authService: AuthService) {
+  constructor(
+    private dialog: MatDialog,
+    private authService: AuthService,
+    private cartService: CartService
+  ) {
     // sottoscrizione allo stato di login — protetta da undefined grazie alla correzione dell'AuthService
     this.authSub = this.authService.isLoggedIn$.subscribe((status: boolean) => {
       this.isLoggedIn = status;
+    });
+  }
+
+  ngOnInit(): void {
+    this.authSub = this.authService.isLoggedIn$.subscribe((status: boolean) => {
+      this.isLoggedIn = status;
+
+      if (status) {
+        const userId = this.authService.getUserId();
+        if (userId !== null) {
+          this.cartService.getCart(userId).subscribe((cart) => {
+            this.cartMovies = cart.movieIds.map((id) => this.cartService.getMovieById(id));
+          });
+        }
+      } else {
+        this.cartMovies = [];
+      }
     });
   }
 
@@ -110,6 +135,24 @@ export class Header implements OnDestroy {
       top: 0,
       left: 0,
       behavior: 'smooth',
+    });
+  }
+
+  openCart() {
+    const dialogRef = this.dialog.open(CartDialog, {
+      width: '400px',
+      data: { movies: this.cartMovies },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'purchase') {
+        const userId = this.authService.getUserId();
+        if (userId !== null) {
+          this.cartService.purchaseCart(userId).subscribe(() => {
+            this.cartMovies = [];
+          });
+        }
+      }
     });
   }
 
