@@ -31,14 +31,30 @@ export class MovieDetail implements OnInit {
     this.movieId = Number(this.route.snapshot.paramMap.get('id'));
     this.loadMovieDetails();
 
+    // Stato login
     this.authService.isLoggedIn$.subscribe((status) => {
       this.isLoggedIn = status;
       if (!status) {
         this.alreadyPurchased = false;
         this.alreadyInCart = false;
       } else {
-        this.updateFlags();
+        this.subscribeCartChanges();
       }
+    });
+  }
+
+  subscribeCartChanges() {
+    const userId = this.authService.getUserId();
+    if (!userId) return;
+
+    this.cartService.getCartObservable().subscribe((cart) => {
+      // aggiorna già in cart
+      this.alreadyInCart = cart?.movieIds.includes(this.movieId) ?? false;
+
+      // aggiorna alreadyPurchased reattivamente
+      this.cartService.getPurchasedMovies(userId).subscribe((purchased) => {
+        this.alreadyPurchased = purchased.includes(this.movieId);
+      });
     });
   }
 
@@ -69,9 +85,7 @@ export class MovieDetail implements OnInit {
     if (!userId) return;
 
     this.cartService.addMovieToCart(userId, this.movieId).subscribe(() => {
-      this.alreadyInCart = true;
-
-      this.updateFlags();
+      console.log('Film aggiunto al carrello:', this.movieDetails);
     });
   }
   updateFlags() {
@@ -91,8 +105,7 @@ export class MovieDetail implements OnInit {
     if (!userId) return;
 
     this.cartService.purchaseCart(userId).subscribe(() => {
-      this.alreadyPurchased = true;
-      this.alreadyInCart = false;
+      console.log('Film acquistato:', this.movieDetails);
     });
   }
   playMovie() {

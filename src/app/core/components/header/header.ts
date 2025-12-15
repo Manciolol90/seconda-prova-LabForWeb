@@ -152,33 +152,25 @@ export class Header implements OnDestroy, OnInit {
 
   openCart() {
     const userId = this.authService.getUserId();
-    if (userId === null) return;
+    if (!userId) return;
 
     this.cartService.getCart(userId).subscribe((cart) => {
       this.movieDbService.getSavedMovies().subscribe((movies) => {
-        // 🔹 Popola SEMPRE cartMovies (anche vuoto)
         this.cartMovies = movies.filter((m) => cart.movieIds.includes(m.tmdbId ?? m.id));
 
         const dialogRef = this.dialog.open(CartDialog, {
           width: '400px',
           data: {
             movies: this.cartMovies,
-
-            // ❌ RIMOZIONE SENZA CHIUDERE DIALOG
             onRemove: (movieId: number) => {
-              this.cartService.removeMovieFromCart(userId, movieId).subscribe(() => {
-                this.cartMovies = this.cartMovies.filter((m) => m.id !== movieId);
-              });
+              this.cartService.removeMovieFromCart(userId, movieId).subscribe();
             },
           },
         });
 
         dialogRef.afterClosed().subscribe((result) => {
           if (result === 'purchase') {
-            this.cartService.purchaseCart(userId).subscribe(() => {
-              this.cartMovies = [];
-              this.updateFlags();
-            });
+            this.cartService.purchaseCart(userId).subscribe();
           }
         });
       });
