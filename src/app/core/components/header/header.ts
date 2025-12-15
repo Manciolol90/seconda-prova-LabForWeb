@@ -7,7 +7,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LoginDialog } from '../../../shared/components/login-dialog/login-dialog';
 import { RegisterDialog } from '../../../shared/components/register-dialog/register-dialog';
 import { AuthService } from '../../../services/auth.service';
-import { Subscription } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SearchDialog } from '../../../shared/components/search-dialog/search-dialog';
@@ -15,6 +15,7 @@ import { RouterModule } from '@angular/router';
 import { CartDialog } from '../../../shared/components/cart-dialog/cart-dialog';
 import { CartService } from '../../../services/cart.service';
 import { Movie } from '../../../models/movie.model';
+import { MovieDbService } from '../../../services/movie-db.service';
 
 @Component({
   selector: 'app-header',
@@ -54,7 +55,8 @@ export class Header implements OnDestroy, OnInit {
   constructor(
     private dialog: MatDialog,
     private authService: AuthService,
-    private cartService: CartService
+    private cartService: CartService,
+    private movieDbService: MovieDbService
   ) {
     // sottoscrizione allo stato di login — protetta da undefined grazie alla correzione dell'AuthService
     this.authSub = this.authService.isLoggedIn$.subscribe((status: boolean) => {
@@ -63,19 +65,29 @@ export class Header implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    this.authSub = this.authService.isLoggedIn$.subscribe((status: boolean) => {
+    this.authSub = this.authService.isLoggedIn$.subscribe((status) => {
       this.isLoggedIn = status;
 
-      if (status) {
-        const userId = this.authService.getUserId();
-        if (userId !== null) {
-          this.cartService.getCart(userId).subscribe((cart) => {
-            this.cartMovies = cart.movieIds.map((id) => this.cartService.getMovieById(id));
-          });
-        }
-      } else {
+      if (!status) {
         this.cartMovies = [];
+        return;
       }
+
+      const userId = this.authService.getUserId();
+      if (userId === null) return;
+
+      this.cartService.getCart(userId).subscribe((cart) => {
+        if (!cart || cart.movieIds.length === 0) {
+          this.cartMovies = [];
+          return;
+        }
+
+        this.movieDbService.getSavedMovies().subscribe((movies) => {
+          this.cartMovies = movies.filter((m) => cart.movieIds.includes(m.tmdbId ?? m.id));
+
+          console.log('CART MOVIES REALI:', this.cartMovies);
+        });
+      });
     });
   }
 
@@ -139,6 +151,9 @@ export class Header implements OnDestroy, OnInit {
   }
 
   openCart() {
+    const userId = this.authService.getUserId();
+    if (userId === null) return;
+
     const dialogRef = this.dialog.open(CartDialog, {
       width: '400px',
       data: { movies: this.cartMovies },
@@ -146,12 +161,9 @@ export class Header implements OnDestroy, OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'purchase') {
-        const userId = this.authService.getUserId();
-        if (userId !== null) {
-          this.cartService.purchaseCart(userId).subscribe(() => {
-            this.cartMovies = [];
-          });
-        }
+        this.cartService.purchaseCart(userId).subscribe(() => {
+          this.cartMovies = [];
+        });
       }
     });
   }

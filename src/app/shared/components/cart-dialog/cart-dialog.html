@@ -1,13 +1,13 @@
 <h2>Carrello</h2>
 
-<div *ngIf="movies.length > 0; else emptyCart" class="cart-list">
-  <div *ngFor="let movie of movies" class="cart-item">
+<div *ngIf="data.movies.length > 0; else emptyCart" class="cart-list">
+  <div *ngFor="let movie of data.movies" class="cart-item">
     <img [src]="'https://image.tmdb.org/t/p/w92' + movie.poster_path" [alt]="movie.title" />
     <span>{{ movie.title }}</span>
   </div>
 
   <button mat-raised-button color="primary" (click)="onPurchase()">Acquista</button>
-  <button mat-button color="warn" mat-dialog-close>Chiudi</button>
+  <button mat-button mat-dialog-close>Chiudi</button>
 </div>
 
 <ng-template #emptyCart>

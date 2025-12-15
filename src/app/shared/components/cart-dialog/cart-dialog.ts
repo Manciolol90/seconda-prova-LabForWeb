@@ -1,8 +1,8 @@
-// src/app/shared/components/cart-dialog/cart-dialog.ts
-import { Component, Input } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Movie } from '../../../models/movie.model';
 import { MatButtonModule } from '@angular/material/button';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-cart-dialog',
@@ -12,10 +12,12 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrls: ['./cart-dialog.scss'],
 })
 export class CartDialog {
-  @Input() movies: Movie[] = [];
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: { movies: Movie[] },
+    private dialogRef: MatDialogRef<CartDialog>
+  ) {}
 
-  // Callback per il pulsante acquista
   onPurchase() {
-    // Eventuale logica di acquisto verrà gestita dal chiamante
+    this.dialogRef.close('purchase');
   }
 }

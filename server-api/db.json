@@ -586,6 +586,48 @@
       "vote_average": 0,
       "vote_count": 0,
       "tmdbId": 83533
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/8btfz81bOJ2lC7cujYBTw03wzg3.jpg",
+      "genre_ids": [
+        16,
+        14,
+        12,
+        28
+      ],
+      "id": 980477,
+      "original_language": "zh",
+      "original_title": "哪吒之魔童闹海",
+      "overview": "After a catastrophic event leaves their bodies destroyed, Ne Zha and Ao Bing are granted a fragile second chance at life. As tensions rise between the dragon clans and celestial forces, the two must undergo a series of perilous trials that will test their bond, challenge their identities, and decide the fate of both mortals and immortals.",
+      "popularity": 127.1462,
+      "poster_path": "/cb5NyNrqiCNNoDkA8FfxHAtypdG.jpg",
+      "release_date": "2025-01-29",
+      "title": "Ne Zha 2",
+      "video": false,
+      "vote_average": 8.1,
+      "vote_count": 493,
+      "tmdbId": 980477
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/mPtPJzBkwksUoMEKpkZqxBrlKpZ.jpg",
+      "genre_ids": [
+        27,
+        53
+      ],
+      "id": 1422096,
+      "original_language": "en",
+      "original_title": "Good Boy",
+      "overview": "A loyal dog moves to a rural family home with his owner Todd, only to discover supernatural forces lurking in the shadows. As dark entities threaten his human companion, the brave pup must fight to protect the one he loves most.",
+      "popularity": 126.1474,
+      "poster_path": "/pvMHRi09ur2L1drXh2dXFtuMFgl.jpg",
+      "release_date": "2025-10-01",
+      "title": "Good Boy",
+      "video": false,
+      "vote_average": 6.797,
+      "vote_count": 347,
+      "tmdbId": 1422096
     }
   ],
   "users": [
@@ -617,12 +659,7 @@
   "carts": [
     {
       "userId": 1,
-      "movieIds": [
-        533533,
-        1084242,
-        812583,
-        1180831
-      ],
+      "movieIds": [],
       "id": 1
     },
     {
@@ -642,5 +679,17 @@
       "id": 3
     }
   ],
-  "orders": []
+  "orders": [
+    {
+      "userId": 1,
+      "movieIds": [
+        533533,
+        1084242,
+        812583,
+        1180831
+      ],
+      "date": "2025-12-15T15:07:53.910Z",
+      "id": 1
+    }
+  ]
 }
