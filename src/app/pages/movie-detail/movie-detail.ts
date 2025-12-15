@@ -37,7 +37,7 @@ export class MovieDetail implements OnInit {
         this.alreadyPurchased = false;
         this.alreadyInCart = false;
       } else {
-        this.updateFlags(); // aggiorna i flag in base al DB
+        this.updateFlags();
       }
     });
   }
@@ -69,20 +69,21 @@ export class MovieDetail implements OnInit {
     if (!userId) return;
 
     this.cartService.addMovieToCart(userId, this.movieId).subscribe(() => {
-      this.updateFlags(); // ✅ aggiorna subito il pulsante e il tasto play
+      this.alreadyInCart = true;
+
+      this.updateFlags();
     });
   }
   updateFlags() {
     const userId = this.authService.getUserId();
     if (!userId) return;
 
-    this.cartService.getCart(userId).subscribe((cart) => {
-      this.alreadyInCart = cart?.movieIds.includes(this.movieId) ?? false;
-    });
-
+    // verifica se il film è già acquistato
     this.cartService.getPurchasedMovies(userId).subscribe((purchasedIds) => {
       this.alreadyPurchased = purchasedIds.includes(this.movieId);
     });
+
+    // non serve aggiornare giàInCart qui, lo aggiorniamo subito all'addToCart
   }
 
   purchaseMovie() {
