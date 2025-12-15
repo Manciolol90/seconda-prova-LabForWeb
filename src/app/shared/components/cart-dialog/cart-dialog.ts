@@ -4,6 +4,11 @@ import { Movie } from '../../../models/movie.model';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
+interface CartDialogData {
+  movies: Movie[];
+  onRemove?: (movieId: number) => void;
+}
+
 @Component({
   selector: 'app-cart-dialog',
   standalone: true,
@@ -13,11 +18,17 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class CartDialog {
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { movies: Movie[] },
+    @Inject(MAT_DIALOG_DATA) public data: CartDialogData,
     private dialogRef: MatDialogRef<CartDialog>
   ) {}
 
   onPurchase() {
     this.dialogRef.close('purchase');
+  }
+
+  removeMovie(movieId: number) {
+    if (this.data.onRemove) {
+      this.data.onRemove(movieId);
+    }
   }
 }

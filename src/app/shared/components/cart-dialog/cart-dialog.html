@@ -3,10 +3,22 @@
 <div *ngIf="data.movies.length > 0; else emptyCart" class="cart-list">
   <div *ngFor="let movie of data.movies" class="cart-item">
     <img [src]="'https://image.tmdb.org/t/p/w92' + movie.poster_path" [alt]="movie.title" />
-    <span>{{ movie.title }}</span>
+
+    <div class="cart-info">
+      <strong>{{ movie.title }}</strong>
+      <button mat-icon-button color="warn" (click)="removeMovie(movie.id)">❌</button>
+    </div>
   </div>
 
-  <button mat-raised-button color="primary" (click)="onPurchase()">Acquista</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onPurchase()"
+    [disabled]="data.movies.length === 0"
+  >
+    Acquista
+  </button>
+
   <button mat-button mat-dialog-close>Chiudi</button>
 </div>
 

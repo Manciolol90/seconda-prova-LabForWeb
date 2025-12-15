@@ -104,4 +104,19 @@ export class CartService {
       vote_average: 0,
     };
   }
+
+  removeMovieFromCart(userId: number, movieId: number) {
+    return this.getCart(userId).pipe(
+      map((cart) => {
+        cart.movieIds = cart.movieIds.filter((id) => id !== movieId);
+        return cart;
+      }),
+      tap((cart) => {
+        if (cart.id !== 0) {
+          this.http.put(`${this.apiUrl}/carts/${cart.id}`, cart).subscribe();
+        }
+        this.cart$.next(cart);
+      })
+    );
+  }
 }

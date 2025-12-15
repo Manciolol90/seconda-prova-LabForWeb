@@ -154,17 +154,34 @@ export class Header implements OnDestroy, OnInit {
     const userId = this.authService.getUserId();
     if (userId === null) return;
 
-    const dialogRef = this.dialog.open(CartDialog, {
-      width: '400px',
-      data: { movies: this.cartMovies },
-    });
+    this.cartService.getCart(userId).subscribe((cart) => {
+      this.movieDbService.getSavedMovies().subscribe((movies) => {
+        // 🔹 Popola SEMPRE cartMovies (anche vuoto)
+        this.cartMovies = movies.filter((m) => cart.movieIds.includes(m.tmdbId ?? m.id));
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === 'purchase') {
-        this.cartService.purchaseCart(userId).subscribe(() => {
-          this.cartMovies = [];
+        const dialogRef = this.dialog.open(CartDialog, {
+          width: '400px',
+          data: {
+            movies: this.cartMovies,
+
+            // ❌ RIMOZIONE SENZA CHIUDERE DIALOG
+            onRemove: (movieId: number) => {
+              this.cartService.removeMovieFromCart(userId, movieId).subscribe(() => {
+                this.cartMovies = this.cartMovies.filter((m) => m.id !== movieId);
+              });
+            },
+          },
         });
-      }
+
+        dialogRef.afterClosed().subscribe((result) => {
+          // 💳 ACQUISTO (UNICO CASO IN CUI CHIUDIAMO)
+          if (result === 'purchase') {
+            this.cartService.purchaseCart(userId).subscribe(() => {
+              this.cartMovies = [];
+            });
+          }
+        });
+      });
     });
   }
 
