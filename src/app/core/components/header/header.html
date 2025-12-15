@@ -6,7 +6,7 @@
 
   <div class="header-right">
     <button mat-fab (click)="openSearchCard()">🔍</button>
-    <button mat-fab (click)="openCart()">🛒</button>
+    <button mat-fab *ngIf="isLoggedIn" (click)="openCart()">🛒</button>
     <button *ngIf="!isLoggedIn" mat-fab (click)="accediOnClick()">Accedi</button>
 
     <!-- Pulsante utente con menu a tendina -->

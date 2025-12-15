@@ -1,0 +1,27 @@
+<div class="library-container" *ngIf="isLoggedIn">
+  <h2>La tua libreria</h2>
+  <div class="library-cards">
+    <div class="movie-card" *ngFor="let film of purchasedMovies" [routerLink]="['/movie', film.id]">
+      <mat-card class="movie-mat-card" appearance="outlined">
+        <img
+          mat-card-image
+          [src]="'https://image.tmdb.org/t/p/w300' + film.poster_path"
+          [alt]="film.title"
+        />
+        <div class="movie-overlay">
+          <h3>{{ film.title }}</h3>
+          <p>{{ film.overview }}</p>
+          <span class="rating">⭐ {{ film.vote_average }}</span>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+
+  <div *ngIf="purchasedMovies.length === 0" class="empty-message">
+    Non hai ancora acquistato film 😢
+  </div>
+</div>
+
+<div *ngIf="!isLoggedIn" class="empty-message">
+  Devi effettuare il login per vedere la tua libreria.
+</div>

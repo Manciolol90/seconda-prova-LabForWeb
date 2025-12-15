@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomePage } from './pages/home-page/home-page';
 import { MovieDetail } from './pages/movie-detail/movie-detail';
 import { MainLayout } from './layout/main-layout';
+import { Library } from './pages/library/library';
 
 export const routes: Routes = [
   {
@@ -11,6 +12,7 @@ export const routes: Routes = [
     children: [
       { path: '', component: HomePage },
       { path: 'movie/:id', component: MovieDetail },
+      { path: 'library', component: Library },
     ],
   },
 ];
