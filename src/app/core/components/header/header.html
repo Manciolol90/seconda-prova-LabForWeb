@@ -8,6 +8,14 @@
     <button mat-fab (click)="openSearchCard()">🔍</button>
     <button mat-fab (click)="openCart()">🛒</button>
     <button *ngIf="!isLoggedIn" mat-fab (click)="accediOnClick()">Accedi</button>
-    <button *ngIf="isLoggedIn" mat-fab (click)="logoutOnClick()">{{ userName }}</button>
+
+    <!-- Pulsante utente con menu a tendina -->
+    <div class="user-menu-container" *ngIf="isLoggedIn">
+      <button mat-fab (click)="toggleUserMenu()">{{ userName }}</button>
+      <ul class="user-dropdown" [class.show]="userMenuOpen">
+        <li><button (click)="logoutOnClick()">Logout</button></li>
+        <li><button routerLink="/library">Libreria film</button></li>
+      </ul>
+    </div>
   </div>
 </header>

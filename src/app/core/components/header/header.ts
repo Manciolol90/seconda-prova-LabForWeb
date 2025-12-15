@@ -1,4 +1,4 @@
-import { Component, OnDestroy, EventEmitter, Output, OnInit } from '@angular/core';
+import { Component, OnDestroy, EventEmitter, Output, OnInit, HostListener } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,6 +16,8 @@ import { CartDialog } from '../../../shared/components/cart-dialog/cart-dialog';
 import { CartService } from '../../../services/cart.service';
 import { Movie } from '../../../models/movie.model';
 import { MovieDbService } from '../../../services/movie-db.service';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-header',
@@ -29,6 +31,8 @@ import { MovieDbService } from '../../../services/movie-db.service';
     CommonModule,
     FormsModule,
     RouterModule,
+    MatMenuModule,
+    MatIconModule,
   ],
   templateUrl: './header.html',
   styleUrls: ['./header.scss'],
@@ -194,6 +198,20 @@ export class Header implements OnDestroy, OnInit {
         console.log('CART MOVIES AGGIORNATI:', this.cartMovies);
       });
     });
+  }
+  userMenuOpen = false;
+
+  toggleUserMenu() {
+    this.userMenuOpen = !this.userMenuOpen;
+  }
+
+  // chiudi il menu se clicchi fuori
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: Event) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.user-menu-container')) {
+      this.userMenuOpen = false;
+    }
   }
 
   ngOnDestroy(): void {

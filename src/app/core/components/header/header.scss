@@ -1,3 +1,4 @@
+/* Bottoni generici */
 button {
   background-color: rgb(60, 158, 54, 0.8);
   width: 7em;
@@ -7,6 +8,7 @@ button {
   align-items: center;
   border-radius: 8px;
   color: white;
+  border: none;
 }
 
 button:hover {
@@ -14,13 +16,14 @@ button:hover {
   cursor: pointer;
 }
 
+/* Header */
 header {
   display: flex;
   justify-content: space-between;
   position: sticky;
   top: 0;
   background-color: rgba(0, 0, 0, 0.485);
-  z-index: 2; /* per farlo rimanere sopra al video hero */
+  z-index: 2;
 }
 
 .header-left {
@@ -44,4 +47,82 @@ header {
 
 #avatar:hover {
   cursor: pointer;
+}
+
+/* Menu utente */
+.user-menu-container {
+  position: relative;
+  display: inline-block;
+
+  /* Bottone principale */
+  button {
+    background-color: rgb(60, 158, 54, 0.8);
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+
+    &:hover {
+      background-color: rgb(37, 74, 34, 0.8);
+      color: white;
+    }
+  }
+
+  /* Dropdown */
+  ul.user-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 20;
+    flex-direction: column;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    background-color: #222; /* sfondo scuro uniforme */
+
+    li {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+
+      button {
+        width: 7em; /* uguale ai bottoni principali */
+        height: 3.5em; /* uguale ai bottoni principali */
+        padding: 0; /* rimuove padding extra */
+        background-color: rgb(60, 158, 54, 0.8);
+        color: white;
+        text-align: center;
+        font-weight: bold;
+        border-radius: 8px;
+        border: none;
+
+        &:hover {
+          background-color: rgb(37, 74, 34, 0.8);
+        }
+      }
+    }
+
+    &.show {
+      display: flex;
+      animation: slideFadeDown 0.25s ease forwards;
+    }
+  }
+}
+
+/* Animazione di apertura dropdown */
+@keyframes slideFadeDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
