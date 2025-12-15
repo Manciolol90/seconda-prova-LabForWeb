@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header } from '../core/components/header/header';
 import { Footer } from '../core/components/footer/footer';
-import { Movie } from '../models/movie.model';
+import { CartService } from '../services/cart.service';
 import { FormsModule } from '@angular/forms';
 import { ViewChild } from '@angular/core';
 import { HomePage } from '../pages/home-page/home-page';
@@ -16,6 +16,8 @@ import { HomePage } from '../pages/home-page/home-page';
 })
 export class MainLayout {
   filtro: string = '';
+
+  constructor(private cartService: CartService) {}
 
   @ViewChild(RouterOutlet) outlet!: RouterOutlet;
 

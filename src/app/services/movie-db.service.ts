@@ -30,15 +30,8 @@ export class MovieDbService {
 
   /** Salva un film nel db.json */
   private saveMovie(movie: Movie): Observable<any> {
-    const ownerId = this.authService.getUserId(); // ID utente loggato
-    console.log('Salvo film:', movie.title, 'per utente ID:', ownerId);
-
     return this.http
-      .post(
-        `${this.dbUrl}/660/movies`,
-        { ...movie, tmdbId: movie.id, ownerId }, // <-- aggiunto ownerId
-        this.authHeaders()
-      )
+      .post(`${this.dbUrl}/660/movies`, { ...movie, tmdbId: movie.id }, this.authHeaders())
       .pipe(
         catchError((err) => {
           console.error('Errore POST movie', movie.title, err);

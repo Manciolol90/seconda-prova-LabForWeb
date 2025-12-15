@@ -14,6 +14,17 @@
         <span *ngFor="let g of movieDetails.genres">{{ g.name }}</span>
       </p>
       <p class="release-date">Released: {{ movieDetails.release_date }}</p>
+      <button
+        mat-raised-button
+        color="primary"
+        *ngIf="isLoggedIn && !alreadyPurchased && !alreadyInCart"
+        (click)="addToCart()"
+      >
+        Aggiungi al carrello
+      </button>
+
+      <span *ngIf="alreadyPurchased">Film già acquistato ✅</span>
+      <span *ngIf="alreadyInCart && !alreadyPurchased">Film nel carrello 🛒</span>
     </div>
   </div>
 </div>

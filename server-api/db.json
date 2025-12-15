@@ -437,8 +437,7 @@
       "video": false,
       "vote_average": 7.273,
       "vote_count": 638,
-      "tmdbId": 785663,
-      "ownerId": 1
+      "tmdbId": 785663
     },
     {
       "adult": false,
@@ -459,8 +458,7 @@
       "video": false,
       "vote_average": 6.55,
       "vote_count": 10,
-      "tmdbId": 1387382,
-      "ownerId": 1
+      "tmdbId": 1387382
     },
     {
       "adult": false,
@@ -481,8 +479,7 @@
       "video": false,
       "vote_average": 6.4,
       "vote_count": 76,
-      "tmdbId": 1149167,
-      "ownerId": 1
+      "tmdbId": 1149167
     },
     {
       "adult": false,
@@ -503,8 +500,7 @@
       "video": false,
       "vote_average": 6.7,
       "vote_count": 301,
-      "tmdbId": 798645,
-      "ownerId": 1
+      "tmdbId": 798645
     },
     {
       "adult": false,
@@ -526,8 +522,7 @@
       "video": false,
       "vote_average": 7.493,
       "vote_count": 149,
-      "tmdbId": 812583,
-      "ownerId": 1
+      "tmdbId": 812583
     },
     {
       "adult": false,
@@ -549,8 +544,7 @@
       "video": false,
       "vote_average": 7,
       "vote_count": 46,
-      "tmdbId": 1217602,
-      "ownerId": 1
+      "tmdbId": 1217602
     },
     {
       "adult": false,
@@ -570,8 +564,28 @@
       "video": false,
       "vote_average": 6.3,
       "vote_count": 17,
-      "tmdbId": 1379963,
-      "ownerId": 1
+      "tmdbId": 1379963
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/iN41Ccw4DctL8npfmYg1j5Tr1eb.jpg",
+      "genre_ids": [
+        878,
+        12,
+        14
+      ],
+      "id": 83533,
+      "original_language": "en",
+      "original_title": "Avatar: Fire and Ash",
+      "overview": "In the wake of the devastating war against the RDA and the loss of their eldest son, Jake Sully and Neytiri face a new threat on Pandora: the Ash People, a violent and power-hungry Na'vi tribe led by the ruthless Varang. Jake's family must fight for their survival and the future of Pandora in a conflict that pushes them to their emotional and physical limits.",
+      "popularity": 121.0001,
+      "poster_path": "/g96wHxU7EnoIFwemb2RgohIXrgW.jpg",
+      "release_date": "2025-12-17",
+      "title": "Avatar: Fire and Ash",
+      "video": false,
+      "vote_average": 0,
+      "vote_count": 0,
+      "tmdbId": 83533
     }
   ],
   "users": [
@@ -599,5 +613,16 @@
       "nome": "Flavio",
       "id": 4
     }
-  ]
+  ],
+  "carts": [
+    {
+      "userId": 1,
+      "movieIds": [
+        533533,
+        1084242
+      ],
+      "id": 1
+    }
+  ],
+  "orders": []
 }
