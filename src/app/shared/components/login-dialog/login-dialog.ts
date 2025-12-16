@@ -34,7 +34,6 @@ export class LoginDialog {
 
     this.authService.login(email, password).subscribe({
       next: (res: AuthResponse) => {
-        console.log('Login effettuato:', res.user);
         this.dialogRef.close(res.user);
       },
       error: (err: any) => {

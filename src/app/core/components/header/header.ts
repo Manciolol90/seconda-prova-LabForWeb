@@ -87,8 +87,6 @@ export class Header implements OnDestroy, OnInit {
 
         this.movieDbService.getSavedMovies().subscribe((movies) => {
           this.cartMovies = movies.filter((m) => cart.movieIds.includes(m.tmdbId ?? m.id));
-
-          console.log('CART MOVIES REALI:', this.cartMovies);
         });
       });
     });
@@ -106,7 +104,6 @@ export class Header implements OnDestroy, OnInit {
       } else if (user?.email) {
         this.userName = user.nome;
         this.isLoggedIn = true;
-        console.log('Login riuscito, utente:', user);
       }
     });
   }
@@ -122,7 +119,6 @@ export class Header implements OnDestroy, OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.registeredUser) {
-        console.log('Registrazione avvenuta', result.registeredUser);
       }
     });
   }
@@ -192,7 +188,6 @@ export class Header implements OnDestroy, OnInit {
 
       this.movieDbService.getSavedMovies().subscribe((movies) => {
         this.cartMovies = movies.filter((m) => cart.movieIds.includes(m.tmdbId ?? m.id));
-        console.log('CART MOVIES AGGIORNATI:', this.cartMovies);
       });
     });
   }

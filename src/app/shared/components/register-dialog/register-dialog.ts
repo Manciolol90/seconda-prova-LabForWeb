@@ -32,7 +32,6 @@ export class RegisterDialog {
 
     this.authService.register(user).subscribe({
       next: (registeredUser: RegisterUser) => {
-        console.log('Registrazione avvenuta:', registeredUser);
         this.dialogRef.close({ registeredUser });
       },
       error: (err: any) => {

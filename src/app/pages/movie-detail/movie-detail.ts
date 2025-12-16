@@ -79,9 +79,7 @@ export class MovieDetail implements OnInit {
     const userId = this.authService.getUserId();
     if (!userId) return;
 
-    this.cartService.addMovieToCart(userId, this.movieId).subscribe(() => {
-      console.log('Film aggiunto al carrello:', this.movieDetails);
-    });
+    this.cartService.addMovieToCart(userId, this.movieId).subscribe(() => {});
   }
   updateFlags() {
     const userId = this.authService.getUserId();
@@ -96,11 +94,9 @@ export class MovieDetail implements OnInit {
     const userId = this.authService.getUserId();
     if (!userId) return;
 
-    this.cartService.purchaseCart(userId).subscribe(() => {
-      console.log('Film acquistato:', this.movieDetails);
-    });
+    this.cartService.purchaseCart(userId).subscribe(() => {});
   }
   playMovie() {
-    console.log('Film acquistato:', this.movieDetails);
+    console.log('Film in riproduzione:', this.movieDetails);
   }
 }

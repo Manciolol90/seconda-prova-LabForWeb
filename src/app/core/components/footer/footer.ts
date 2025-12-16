@@ -22,7 +22,6 @@ export class Footer {
 
   send(form: any) {
     if (form.valid) {
-      console.log('Form inviato:', form.value);
       this.closeContact();
       form.reset();
     }
