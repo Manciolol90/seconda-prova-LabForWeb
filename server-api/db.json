@@ -633,175 +633,66 @@
   "users": [
     {
       "email": "tommaso.banana@qualcosa.it",
-      "password": "$2a$10$JjPvH5a2B7a2Ib/uyfH1JOtnNmZWuors3LwgEMFitDBcPqRZKfIx2",
+      "password": "$2a$10$.TrwKmQwQFFe4mDRp3MV8uNmrJrg0xECLQk6l9uS4Y2hCfJBfukmW",
       "nome": "Tommy",
       "id": 1
     },
     {
-      "email": "mancio.90@qualcosa.it",
-      "password": "$2a$10$HWuzaBwFNM3PUHZhZe11l.0geJkAMISUPBDTscggFnDmEPEXu6H9u",
-      "nome": "Manciolol90",
+      "email": "daniele@qualcosa.zip",
+      "password": "$2a$10$W9xK8xHSIP9q5NuH8rEz5.njHP7jnHlq76vmetXM.eIsAU37TKlaK",
+      "nome": "Daniele",
       "id": 2
-    },
-    {
-      "email": "giulia93@qualcosa.it",
-      "password": "$2a$10$pGJth7h4j4z2/Tq8P.moTOpHWXiPFVF3TE7I3kJUejCwz8Ubi0Gnq",
-      "nome": "Giulia",
-      "id": 3
-    },
-    {
-      "email": "flavio.banana4@qualcosa.it",
-      "password": "$2a$10$DqJeWLhCFR6sokNuLd28V.nMf.KOWjq1d0zU5BGpKFcoT6wqaX28e",
-      "nome": "Flavio",
-      "id": 4
-    },
-    {
-      "email": "miro@ilgatto.miao",
-      "password": "$2a$10$dh2iQoi3xQbawrQpkc41AuFzEV.78t9joU/jDagZ8TRKaLdGOgYda",
-      "nome": "Mirò",
-      "id": 5
     }
   ],
   "carts": [
     {
       "id": 1,
       "userId": 1,
-      "movieIds": []
+      "movieIds": [
+        1448560,
+        1218925,
+        967941,
+        1242898
+      ]
     },
     {
       "id": 2,
-      "userId": 3,
-      "movieIds": []
-    },
-    {
-      "id": 3,
-      "userId": 5,
-      "movieIds": []
+      "userId": 2,
+      "movieIds": [
+        23527,
+        1448560
+      ]
     }
   ],
   "orders": [
     {
       "userId": 1,
       "movieIds": [
+        533533,
+        1180831,
+        1084242,
         1083637
       ],
-      "date": "2025-12-15T17:22:13.186Z",
+      "date": "2025-12-16T13:17:25.174Z",
       "id": 1
     },
     {
       "userId": 1,
       "movieIds": [
-        1083637,
-        533533
+        1228246
       ],
-      "date": "2025-12-15T17:29:01.098Z",
+      "date": "2025-12-16T13:17:30.183Z",
       "id": 2
     },
     {
-      "userId": 1,
+      "userId": 2,
       "movieIds": [
-        1180831
+        83533,
+        1228246,
+        785663
       ],
-      "date": "2025-12-15T17:29:13.652Z",
+      "date": "2025-12-16T13:25:42.062Z",
       "id": 3
-    },
-    {
-      "userId": 1,
-      "movieIds": [
-        1084242
-      ],
-      "date": "2025-12-15T18:35:46.727Z",
-      "id": 4
-    },
-    {
-      "userId": 1,
-      "movieIds": [
-        83533
-      ],
-      "date": "2025-12-15T18:39:52.151Z",
-      "id": 5
-    },
-    {
-      "userId": 1,
-      "movieIds": [
-        23527
-      ],
-      "date": "2025-12-15T18:40:04.366Z",
-      "id": 6
-    },
-    {
-      "userId": 1,
-      "movieIds": [
-        1309012
-      ],
-      "date": "2025-12-15T18:47:02.503Z",
-      "id": 7
-    },
-    {
-      "userId": 1,
-      "movieIds": [
-        1228246
-      ],
-      "date": "2025-12-15T19:12:37.709Z",
-      "id": 8
-    },
-    {
-      "userId": 3,
-      "movieIds": [
-        1084242,
-        1448560
-      ],
-      "date": "2025-12-15T19:31:38.709Z",
-      "id": 9
-    },
-    {
-      "userId": 5,
-      "movieIds": [
-        1422096
-      ],
-      "date": "2025-12-15T19:37:46.396Z",
-      "id": 10
-    },
-    {
-      "userId": 5,
-      "movieIds": [
-        1228246
-      ],
-      "date": "2025-12-15T19:38:07.671Z",
-      "id": 11
-    },
-    {
-      "userId": 1,
-      "movieIds": [
-        980477,
-        1218925
-      ],
-      "date": "2025-12-15T19:39:38.680Z",
-      "id": 12
-    },
-    {
-      "userId": 1,
-      "movieIds": [
-        949709
-      ],
-      "date": "2025-12-15T19:39:41.658Z",
-      "id": 13
-    },
-    {
-      "userId": 1,
-      "movieIds": [
-        1387382
-      ],
-      "date": "2025-12-15T19:42:01.930Z",
-      "id": 14
-    },
-    {
-      "userId": 1,
-      "movieIds": [
-        1217602
-      ],
-      "date": "2025-12-16T12:46:08.980Z",
-      "id": 15
     }
   ]
 }
