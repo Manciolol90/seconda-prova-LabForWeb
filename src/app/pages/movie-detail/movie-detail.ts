@@ -31,7 +31,6 @@ export class MovieDetail implements OnInit {
     this.movieId = Number(this.route.snapshot.paramMap.get('id'));
     this.loadMovieDetails();
 
-    // Stato login
     this.authService.isLoggedIn$.subscribe((status) => {
       this.isLoggedIn = status;
       if (!status) {
@@ -48,10 +47,8 @@ export class MovieDetail implements OnInit {
     if (!userId) return;
 
     this.cartService.getCartObservable().subscribe((cart) => {
-      // aggiorna già in cart
       this.alreadyInCart = cart?.movieIds.includes(this.movieId) ?? false;
 
-      // aggiorna alreadyPurchased reattivamente
       this.cartService.getPurchasedMovies(userId).subscribe((purchased) => {
         this.alreadyPurchased = purchased.includes(this.movieId);
       });
@@ -69,12 +66,10 @@ export class MovieDetail implements OnInit {
     const userId = this.authService.getUserId();
     if (!userId) return;
 
-    // verifica se il film è già acquistato
     this.cartService.getPurchasedMovies(userId).subscribe((purchasedIds) => {
       this.alreadyPurchased = purchasedIds.includes(this.movieId);
     });
 
-    // verifica se il film è già nel carrello
     this.cartService.getCart(userId).subscribe((cart) => {
       this.alreadyInCart = cart?.movieIds.includes(this.movieId) ?? false;
     });
@@ -92,12 +87,9 @@ export class MovieDetail implements OnInit {
     const userId = this.authService.getUserId();
     if (!userId) return;
 
-    // verifica se il film è già acquistato
     this.cartService.getPurchasedMovies(userId).subscribe((purchasedIds) => {
       this.alreadyPurchased = purchasedIds.includes(this.movieId);
     });
-
-    // non serve aggiornare giàInCart qui, lo aggiorniamo subito all'addToCart
   }
 
   purchaseMovie() {

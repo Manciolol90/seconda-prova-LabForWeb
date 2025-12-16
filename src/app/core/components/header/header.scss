@@ -1,4 +1,3 @@
-/* Bottoni generici */
 button {
   background-color: rgb(60, 158, 54, 0.8);
   width: 7em;
@@ -16,7 +15,6 @@ button:hover {
   cursor: pointer;
 }
 
-/* Header */
 header {
   display: flex;
   justify-content: space-between;
@@ -49,12 +47,10 @@ header {
   cursor: pointer;
 }
 
-/* Menu utente */
 .user-menu-container {
   position: relative;
   display: inline-block;
 
-  /* Bottone principale */
   button {
     background-color: rgb(60, 158, 54, 0.8);
     color: white;
@@ -70,7 +66,6 @@ header {
     }
   }
 
-  /* Dropdown */
   ul.user-dropdown {
     display: none;
     position: absolute;
@@ -84,7 +79,7 @@ header {
     z-index: 20;
     flex-direction: column;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    background-color: #222; /* sfondo scuro uniforme */
+    background-color: #222;
 
     li {
       width: 100%;
@@ -92,9 +87,9 @@ header {
       justify-content: center;
 
       button {
-        width: 7em; /* uguale ai bottoni principali */
-        height: 3.5em; /* uguale ai bottoni principali */
-        padding: 0; /* rimuove padding extra */
+        width: 7em;
+        height: 3.5em;
+        padding: 0;
         background-color: rgb(60, 158, 54, 0.8);
         color: white;
         text-align: center;
@@ -115,7 +110,12 @@ header {
   }
 }
 
-/* Animazione di apertura dropdown */
+.header-left,
+.header-right {
+  padding: 0.3em 0;
+  gap: 0.05em;
+}
+
 @keyframes slideFadeDown {
   0% {
     opacity: 0;

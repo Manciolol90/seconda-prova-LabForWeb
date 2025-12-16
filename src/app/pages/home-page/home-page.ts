@@ -26,12 +26,11 @@ export class HomePage implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Ricarica i film ogni volta che cambia lo stato di login
     this.auth.isLoggedIn$.subscribe(() => {
       this.loadMovies();
     });
 
-    this.loadMovies(); // caricamento iniziale
+    this.loadMovies();
   }
 
   loadMovies() {
@@ -40,7 +39,6 @@ export class HomePage implements OnInit {
     const isLoggedIn = this.auth.getToken() !== null;
 
     if (isLoggedIn) {
-      // quando l'utente è loggato → merge TMDB + DB e salvataggio
       this.localDb.mergeAndSaveMovies().subscribe({
         next: (movies) => {
           this.movies = movies;
@@ -53,7 +51,6 @@ export class HomePage implements OnInit {
         },
       });
     } else {
-      // utente non loggato → solo TMDB
       this.tmdb.getPopularMovies().subscribe({
         next: (movies) => {
           this.movies = movies;

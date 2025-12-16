@@ -27,10 +27,8 @@ export class CartDialog {
     private dialogRef: MatDialogRef<CartDialog>,
     private cartService: CartService
   ) {
-    // inizializza con i film già passati
     this.movies = [...data.movies];
 
-    // sottoscrivi il cartService per aggiornamenti in tempo reale
     this.sub = this.cartService.getCartObservable().subscribe((cart) => {
       if (!cart) return;
       this.movies = this.movies.filter((m) => cart.movieIds.includes(m.id));

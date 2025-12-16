@@ -19,7 +19,6 @@
   display: block;
 }
 
-/* Overlay scuro */
 .hero::after {
   content: '';
   position: absolute;
@@ -32,7 +31,6 @@
   );
 }
 
-/* Testo in sovraimpressione in basso */
 .hero-info {
   position: absolute;
   bottom: 25px;
@@ -63,7 +61,6 @@
   text-overflow: ellipsis;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .hero {
     height: 50vh;

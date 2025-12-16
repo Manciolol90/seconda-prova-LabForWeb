@@ -34,7 +34,7 @@
   }
 
   button {
-    font-size: 0.7rem; // molto più piccolo
+    font-size: 0.7rem;
     padding: 2px 6px;
     min-width: 0;
   }
@@ -43,7 +43,6 @@
   }
 }
 
-// Animazioni di entrata/uscita (uguali al login-dialog)
 @keyframes slideFadeIn {
   0% {
     opacity: 0;

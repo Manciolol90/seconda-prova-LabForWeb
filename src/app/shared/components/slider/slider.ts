@@ -2,10 +2,6 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Input } from '@ang
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
-import { MovieDbService } from '../../../services/movie-db.service';
-import { AuthService } from '../../../services/auth.service';
-import { MoviesService } from '../../../services/movies.service';
-import { Subscription } from 'rxjs';
 import { Movie } from '../../../models/movie.model';
 
 @Component({
@@ -22,7 +18,7 @@ export class Slider implements OnInit, OnDestroy {
 
   @ViewChild('slider', { static: false }) slider!: ElementRef<HTMLDivElement>;
 
-  constructor(private authService: AuthService) {}
+  constructor() {}
 
   ngOnInit() {
     this.startAutoScroll();

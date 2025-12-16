@@ -7,7 +7,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LoginDialog } from '../../../shared/components/login-dialog/login-dialog';
 import { RegisterDialog } from '../../../shared/components/register-dialog/register-dialog';
 import { AuthService } from '../../../services/auth.service';
-import { forkJoin, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SearchDialog } from '../../../shared/components/search-dialog/search-dialog';
@@ -62,7 +62,6 @@ export class Header implements OnDestroy, OnInit {
     private cartService: CartService,
     private movieDbService: MovieDbService
   ) {
-    // sottoscrizione allo stato di login — protetta da undefined grazie alla correzione dell'AuthService
     this.authSub = this.authService.isLoggedIn$.subscribe((status: boolean) => {
       this.isLoggedIn = status;
     });
@@ -185,14 +184,12 @@ export class Header implements OnDestroy, OnInit {
     const userId = this.authService.getUserId();
     if (!userId) return;
 
-    // recupera il carrello
     this.cartService.getCart(userId).subscribe((cart) => {
       if (!cart || cart.movieIds.length === 0) {
         this.cartMovies = [];
         return;
       }
 
-      // recupera film completi
       this.movieDbService.getSavedMovies().subscribe((movies) => {
         this.cartMovies = movies.filter((m) => cart.movieIds.includes(m.tmdbId ?? m.id));
         console.log('CART MOVIES AGGIORNATI:', this.cartMovies);
@@ -205,7 +202,6 @@ export class Header implements OnDestroy, OnInit {
     this.userMenuOpen = !this.userMenuOpen;
   }
 
-  // chiudi il menu se clicchi fuori
   @HostListener('document:click', ['$event'])
   onClickOutside(event: Event) {
     const target = event.target as HTMLElement;

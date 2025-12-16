@@ -9,7 +9,6 @@
     <button mat-fab *ngIf="isLoggedIn" (click)="openCart()">🛒</button>
     <button *ngIf="!isLoggedIn" mat-fab (click)="accediOnClick()">Accedi</button>
 
-    <!-- Pulsante utente con menu a tendina -->
     <div class="user-menu-container" *ngIf="isLoggedIn">
       <button mat-fab (click)="toggleUserMenu()">{{ userName }}</button>
       <ul class="user-dropdown" [class.show]="userMenuOpen">

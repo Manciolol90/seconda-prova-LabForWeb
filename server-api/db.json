@@ -654,12 +654,28 @@
       "password": "$2a$10$DqJeWLhCFR6sokNuLd28V.nMf.KOWjq1d0zU5BGpKFcoT6wqaX28e",
       "nome": "Flavio",
       "id": 4
+    },
+    {
+      "email": "miro@ilgatto.miao",
+      "password": "$2a$10$dh2iQoi3xQbawrQpkc41AuFzEV.78t9joU/jDagZ8TRKaLdGOgYda",
+      "nome": "Mirò",
+      "id": 5
     }
   ],
   "carts": [
     {
       "id": 1,
       "userId": 1,
+      "movieIds": []
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "movieIds": []
+    },
+    {
+      "id": 3,
+      "userId": 5,
       "movieIds": []
     }
   ],
@@ -728,6 +744,56 @@
       ],
       "date": "2025-12-15T19:12:37.709Z",
       "id": 8
+    },
+    {
+      "userId": 3,
+      "movieIds": [
+        1084242,
+        1448560
+      ],
+      "date": "2025-12-15T19:31:38.709Z",
+      "id": 9
+    },
+    {
+      "userId": 5,
+      "movieIds": [
+        1422096
+      ],
+      "date": "2025-12-15T19:37:46.396Z",
+      "id": 10
+    },
+    {
+      "userId": 5,
+      "movieIds": [
+        1228246
+      ],
+      "date": "2025-12-15T19:38:07.671Z",
+      "id": 11
+    },
+    {
+      "userId": 1,
+      "movieIds": [
+        980477,
+        1218925
+      ],
+      "date": "2025-12-15T19:39:38.680Z",
+      "id": 12
+    },
+    {
+      "userId": 1,
+      "movieIds": [
+        949709
+      ],
+      "date": "2025-12-15T19:39:41.658Z",
+      "id": 13
+    },
+    {
+      "userId": 1,
+      "movieIds": [
+        1387382
+      ],
+      "date": "2025-12-15T19:42:01.930Z",
+      "id": 14
     }
   ]
 }

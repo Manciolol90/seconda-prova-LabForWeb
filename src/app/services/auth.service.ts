@@ -22,7 +22,7 @@ export class AuthService {
   public isLoggedIn$: Observable<boolean> = this.loggedIn.asObservable();
 
   private token: string | null = null;
-  private userId: number | null = null; // <- aggiunto
+  private userId: number | null = null;
   private apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {
@@ -33,7 +33,6 @@ export class AuthService {
     }
   }
 
-  /** LOGIN con email e password */
   login(email: string, password: string): Observable<LoginResponse | any> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { email, password }).pipe(
       tap((res) => {
@@ -44,7 +43,6 @@ export class AuthService {
           console.log('TOKEN SALVATO:', this.token);
           localStorage.setItem('token', this.token);
 
-          // <-- SALVA l'utente loggato
           localStorage.setItem('user', JSON.stringify(res.user));
 
           this.loggedIn.next(true);
@@ -59,13 +57,10 @@ export class AuthService {
     );
   }
 
-  /** REGISTRAZIONE nuovo utente */
   register(user: RegisterUser): Observable<any> {
-    // json-server-auth gestisce automaticamente password hashata
     return this.http.post(`${this.apiUrl}/register`, user);
   }
 
-  /** LOGOUT */
   logout() {
     this.token = null;
     this.userId = null;
@@ -74,13 +69,11 @@ export class AuthService {
     this.loggedIn.next(false);
   }
 
-  /** RITORNA il token JWT per le chiamate protette */
   getToken(): string | null {
     console.log('questa è get token TOKEN', this.token);
     return this.token;
   }
 
-  /** Ritorna l’ID dell’utente loggato */
   getUserId(): number | null {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user).id : null;

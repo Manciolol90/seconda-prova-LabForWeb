@@ -8,11 +8,10 @@ import { Movie } from '../models/movie.model';
 })
 export class MoviesService {
   private apiUrl = 'https://api.themoviedb.org/3';
-  private apiKey = 'fa1ce875640810b4229951a8d387315b'; // la tua API Key
+  private apiKey = 'fa1ce875640810b4229951a8d387315b';
 
   constructor(private http: HttpClient) {}
 
-  /** Film popolari */
   getPopularMovies() {
     return this.http
       .get<any>(`${this.apiUrl}/movie/popular?api_key=${this.apiKey}`)

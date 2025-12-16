@@ -11,9 +11,7 @@
   scroll-behavior: smooth;
   gap: 16px;
   padding: 20px 0;
-
-  /* nasconde la scrollbar senza disattivarla */
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;
 }
 .slider::-webkit-scrollbar {
   display: none;
@@ -54,7 +52,6 @@
   transform: scale(0.98);
 }
 
-/* overlay nascosto */
 .movie-overlay {
   position: absolute;
   bottom: 0;
@@ -83,14 +80,14 @@
   font-size: 16px;
   margin: 0 0 6px 0;
   line-height: 1.2em;
-  max-height: 2.4em; /* massimo due righe */
+  max-height: 2.4em;
   overflow: hidden;
 }
 
 .movie-overlay p {
   font-size: 12px;
   margin: 0 0 6px 0;
-  flex: 1; /* occuperà tutto lo spazio disponibile */
+  flex: 1;
   overflow: hidden;
 }
 
@@ -99,7 +96,6 @@
   font-weight: bold;
 }
 
-/* FRECCE */
 .nav-btn {
   position: absolute;
   top: 50%;

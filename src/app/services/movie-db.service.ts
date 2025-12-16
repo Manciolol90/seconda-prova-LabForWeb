@@ -28,24 +28,22 @@ export class MovieDbService {
     };
   }
 
-  /** Salva un film nel db.json */
   private saveMovie(movie: Movie): Observable<any> {
     return this.http
       .post(`${this.dbUrl}/660/movies`, { ...movie, tmdbId: movie.id }, this.authHeaders())
       .pipe(
         catchError((err) => {
           console.error('Errore POST movie', movie.title, err);
-          return of(null); // evita che l’intero merge fallisca
+          return of(null);
         })
       );
   }
 
-  /** Merge e salvataggio dei film da TMDB al db.json */
   mergeAndSaveMovies(): Observable<Movie[]> {
     const token = this.authService.getToken();
     if (!token) {
       console.warn('Utente non loggato, nessun merge possibile');
-      return this.moviesService.getPopularMovies(); // fallback TMDB
+      return this.moviesService.getPopularMovies();
     }
 
     return forkJoin({
@@ -58,14 +56,12 @@ export class MovieDbService {
 
         if (newMovies.length === 0) return of(db);
 
-        // salva film nuovi uno per uno e aspetta che tutti siano completati
         const saves$ = newMovies.map((m) => this.saveMovie(m));
         return forkJoin(saves$).pipe(map(() => [...db, ...newMovies]));
       })
     );
   }
 
-  /** Recupera i film già salvati nel db.json */
   getSavedMovies(): Observable<Movie[]> {
     return this.http.get<Movie[]>(`${this.dbUrl}/640/movies`, this.authHeaders()).pipe(
       catchError((err) => {

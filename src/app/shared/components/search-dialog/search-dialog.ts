@@ -20,12 +20,10 @@ export class SearchDialog {
 
   constructor(private dialogRef: MatDialogRef<SearchDialog>) {}
 
-  /** Trigger on every input letter */
   onInput() {
     this.termineChange.emit(this.termine.toLowerCase());
   }
 
-  /** Chiude il dialog */
   chiudi() {
     if (!this.termine) {
       this.termineChange.emit('');

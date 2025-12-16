@@ -1,23 +1,19 @@
 <footer class="footer">
-  <!-- LOGO -->
   <div class="footer-logo">
     <img src="../../services/LabTV-Loghi/2.png" alt="Logo LabTV" />
   </div>
 
-  <!-- SOCIAL -->
   <div class="footer-social">
     <button class="social-btn youtube"></button>
     <button class="social-btn instagram"></button>
     <button class="social-btn facebook"></button>
   </div>
 
-  <!-- CONTATTI -->
   <div class="footer-contact">
     <button class="contact-btn" (click)="openContact()">Contattaci</button>
   </div>
 </footer>
 
-<!-- POPUP MODAL CONTATTI -->
 <div class="modal-overlay" *ngIf="contactOpen" (click)="closeContact()">
   <div class="modal" (click)="$event.stopPropagation()">
     <h2>Contattaci</h2>

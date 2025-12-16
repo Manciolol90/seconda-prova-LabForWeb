@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header } from '../core/components/header/header';
 import { Footer } from '../core/components/footer/footer';
-import { CartService } from '../services/cart.service';
 import { FormsModule } from '@angular/forms';
 import { ViewChild } from '@angular/core';
 import { HomePage } from '../pages/home-page/home-page';

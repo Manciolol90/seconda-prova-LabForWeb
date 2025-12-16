@@ -15,8 +15,8 @@ import { MatCardModule } from '@angular/material/card';
   styleUrls: ['./library.scss'],
 })
 export class Library implements OnInit {
-  allPurchasedMovies: Movie[] = []; // array originale
-  purchasedMovies: Movie[] = []; // array filtrato
+  allPurchasedMovies: Movie[] = [];
+  purchasedMovies: Movie[] = [];
   isLoggedIn: boolean = false;
 
   constructor(
@@ -32,7 +32,6 @@ export class Library implements OnInit {
         const userId = this.authService.getUserId();
         if (!userId) return;
 
-        // Recupera gli ID dei film acquistati
         this.cartService.getPurchasedMovies(userId).subscribe((ids) => {
           if (ids.length === 0) {
             this.allPurchasedMovies = [];
@@ -40,10 +39,9 @@ export class Library implements OnInit {
             return;
           }
 
-          // Recupera tutti i film salvati e filtra solo quelli acquistati
           this.movieDbService.getSavedMovies().subscribe((movies) => {
             this.allPurchasedMovies = movies.filter((m) => ids.includes(m.id));
-            this.purchasedMovies = [...this.allPurchasedMovies]; // copia originale
+            this.purchasedMovies = [...this.allPurchasedMovies];
           });
         });
       } else {
@@ -53,7 +51,6 @@ export class Library implements OnInit {
     });
   }
 
-  // 🔹 Filtro sicuro
   filtra(termine: string) {
     const t = termine.toLowerCase();
     this.purchasedMovies = this.allPurchasedMovies.filter((m) => m.title.toLowerCase().includes(t));

@@ -1,7 +1,7 @@
 export interface Movie {
-  id: number; // ID TMDB
-  tmdbId?: number; // ID TMDB salvato nel DB
-  dbId?: number; // ID interno JSON server
+  id: number;
+  tmdbId?: number;
+  dbId?: number;
 
   title: string;
   original_title?: string;
