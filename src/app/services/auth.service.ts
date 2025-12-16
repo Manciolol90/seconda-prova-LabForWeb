@@ -36,11 +36,8 @@ export class AuthService {
   login(email: string, password: string): Observable<LoginResponse | any> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { email, password }).pipe(
       tap((res) => {
-        console.log("prima dell'if", res);
         if (res?.accessToken) {
-          console.log('Login avvenuto con successo:', res);
           this.token = res.accessToken;
-          console.log('TOKEN SALVATO:', this.token);
           localStorage.setItem('token', this.token);
 
           localStorage.setItem('user', JSON.stringify(res.user));
@@ -70,7 +67,6 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    console.log('questa è get token TOKEN', this.token);
     return this.token;
   }
 

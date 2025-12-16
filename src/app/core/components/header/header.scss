@@ -26,6 +26,9 @@ header {
 
 .header-left {
   display: flex;
+  align-items: center;
+  gap: 1.2em;
+  margin-left: 1.05em;
 }
 
 .header-right {
@@ -37,14 +40,6 @@ header {
 
 #logo {
   width: 100px;
-}
-
-#avatar {
-  width: 80px;
-}
-
-#avatar:hover {
-  cursor: pointer;
 }
 
 .user-menu-container {
