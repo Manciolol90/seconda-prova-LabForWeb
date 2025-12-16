@@ -1,6 +1,6 @@
 <footer class="footer">
   <div class="footer-logo">
-    <img src="assets/2.png" alt="Logo LabTV" />
+    <img src="assets/1.png" alt="Logo" />
   </div>
 
   <div class="footer-social">
@@ -14,29 +14,4 @@
   </div>
 </footer>
 
-<div class="modal-overlay" *ngIf="contactOpen" (click)="closeContact()">
-  <div class="modal" (click)="$event.stopPropagation()">
-    <h2>Contattaci</h2>
-
-    <form #contactForm="ngForm" (ngSubmit)="send(contactForm)">
-      <div class="input-box">
-        <label>Nome</label>
-        <input type="text" name="nome" ngModel required />
-      </div>
-
-      <div class="input-box">
-        <label>Email</label>
-        <input type="email" name="email" ngModel required />
-      </div>
-
-      <div class="input-box">
-        <label>Messaggio</label>
-        <textarea name="messaggio" rows="5" ngModel required></textarea>
-      </div>
-
-      <button type="submit" class="send-btn" [disabled]="contactForm.invalid">Invia</button>
-    </form>
-
-    <button class="close-btn" (click)="closeContact()">Chiudi</button>
-  </div>
-</div>
+<app-contact-dialog *ngIf="contactOpen" (close)="closeContact()"></app-contact-dialog>

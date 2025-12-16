@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ContactDialog } from '../../../shared/components/contact-dialog/contact-dialog';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ContactDialog],
   templateUrl: './footer.html',
   styleUrls: ['./footer.scss'],
 })
