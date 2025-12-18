@@ -628,6 +628,67 @@
       "vote_average": 6.797,
       "vote_count": 347,
       "tmdbId": 1422096
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/ufqytAlziHq5pljKByGJ8IKhtEZ.jpg",
+      "genre_ids": [
+        53,
+        80,
+        9648
+      ],
+      "id": 425274,
+      "original_language": "en",
+      "original_title": "Now You See Me: Now You Don't",
+      "overview": "The original Four Horsemen reunite with a new generation of illusionists to take on powerful diamond heiress Veronika Vanderberg, who leads a criminal empire built on money laundering and trafficking. The new and old magicians must overcome their differences to work together on their most ambitious heist yet.",
+      "popularity": 123.0701,
+      "poster_path": "/oD3Eey4e4Z259XLm3eD3WGcoJAh.jpg",
+      "release_date": "2025-11-12",
+      "title": "Now You See Me: Now You Don't",
+      "video": false,
+      "vote_average": 6.314,
+      "vote_count": 387,
+      "tmdbId": 425274
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/yCatt8lmp3oRFEcOZF8KHhsiASQ.jpg",
+      "genre_ids": [
+        28,
+        10752
+      ],
+      "id": 1223601,
+      "original_language": "fi",
+      "original_title": "Sisu 2",
+      "overview": "Returning to the house where his family was brutally murdered during the war, ‘the man who refuses to die’ dismantles it, loads it on a truck, and is determined to rebuild it somewhere safe in their honor. When the commander who killed his family comes back hellbent on finishing the job, a relentless, eye-popping cross-country chase ensues.",
+      "popularity": 386.9594,
+      "poster_path": "/jNsttCWZyPtW66MjhUozBzVsRb7.jpg",
+      "release_date": "2025-10-21",
+      "title": "Sisu: Road to Revenge",
+      "video": false,
+      "vote_average": 7.661,
+      "vote_count": 109,
+      "tmdbId": 1223601
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/4mZ06VpfpAPuaUPn1SEV0brbbxe.jpg",
+      "genre_ids": [
+        878,
+        28
+      ],
+      "id": 1196067,
+      "original_language": "en",
+      "original_title": "Worldbreaker",
+      "overview": "Five years ago, a tear in the fabric of reality brought creatures to our world from an alternate dimension bent on our destruction. A father hides his daughter on an island to keep her safe while he prepares her for survival and the battles to come. But when the world is about to break, no place is safe.",
+      "popularity": 242.8591,
+      "poster_path": "/7K8w6mdrJp0oaSoKWGyjSZ4Zv2z.jpg",
+      "release_date": "2025-10-30",
+      "title": "Worldbreaker",
+      "video": false,
+      "vote_average": 6.1,
+      "vote_count": 15,
+      "tmdbId": 1196067
     }
   ],
   "users": [
@@ -642,18 +703,19 @@
       "password": "$2a$10$W9xK8xHSIP9q5NuH8rEz5.njHP7jnHlq76vmetXM.eIsAU37TKlaK",
       "nome": "Daniele",
       "id": 2
+    },
+    {
+      "email": "gaia@qualcosa.zip",
+      "password": "$2a$10$cLGhq18q6H4pGIbQFU5NSOq8IWFMwZASPIFzEIeuJjAN23XPApMaC",
+      "nome": "Gaia",
+      "id": 3
     }
   ],
   "carts": [
     {
       "id": 1,
       "userId": 1,
-      "movieIds": [
-        1448560,
-        1218925,
-        967941,
-        1242898
-      ]
+      "movieIds": []
     },
     {
       "id": 2,
@@ -662,6 +724,11 @@
         23527,
         1448560
       ]
+    },
+    {
+      "id": 3,
+      "userId": 3,
+      "movieIds": []
     }
   ],
   "orders": [
@@ -693,6 +760,26 @@
       ],
       "date": "2025-12-16T13:25:42.062Z",
       "id": 3
+    },
+    {
+      "userId": 1,
+      "movieIds": [
+        1218925,
+        967941,
+        1242898,
+        1448560
+      ],
+      "date": "2025-12-16T18:15:04.474Z",
+      "id": 4
+    },
+    {
+      "userId": 3,
+      "movieIds": [
+        1180831,
+        1083637
+      ],
+      "date": "2025-12-16T18:16:59.380Z",
+      "id": 5
     }
   ]
 }

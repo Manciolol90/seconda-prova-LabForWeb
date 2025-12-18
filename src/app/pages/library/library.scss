@@ -10,10 +10,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
-  }
-
-  .movie-card {
-    flex: 0 0 auto;
+    justify-content: flex-start;
   }
 
   .movie-mat-card {
@@ -98,6 +95,9 @@
   transform: translateY(20px);
   animation: fadeInUp 0.5s forwards;
 
+  flex: 1 1 250px;
+  max-width: 250px;
+
   @for $i from 1 through 20 {
     &:nth-child(#{$i}) {
       animation-delay: #{$i * 0.15}s;
@@ -113,5 +113,33 @@
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 900px) {
+  .library-cards {
+    justify-content: center;
+  }
+
+  .movie-card {
+    flex: 1 1 220px;
+    max-width: 220px;
+  }
+
+  .movie-mat-card {
+    width: 220px;
+    height: 320px;
+  }
+}
+
+@media (max-width: 600px) {
+  .movie-card {
+    flex: 1 1 160px;
+    max-width: 160px;
+  }
+
+  .movie-mat-card {
+    width: 160px;
+    height: 240px;
   }
 }
